@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Internship - Certificate | Sivasankaran E</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Parent CSS -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Internship Certificate Showcase CSS -->
+    <style>
+        .showcase-body {
+            padding-top: 120px;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--color-text-primary);
+        }
+        
+        .back-nav {
+            margin-bottom: 40px;
+        }
+        
+        .cert-header-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cert-meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        
+        .cert-display-card {
+            background: rgba(20, 22, 35, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 60px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .image-wrapper {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #11121d;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            cursor: zoom-in;
+            transition: var(--transition-bounce);
+        }
+        
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition-smooth);
+        }
+        
+        .image-wrapper:hover {
+            border-color: var(--color-teal);
+            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.15);
+        }
+        
+        .download-action {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="showcase-body">
+
+    <!-- Magnetic Glow Effect Background -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <div class="section-container" style="padding-top: 40px; max-width: 1000px;">
+        <!-- Back Navigation -->
+        <div class="back-nav">
+            <a href="../index.html#timeline" class="btn btn-secondary btn-icon">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+        </div>
+        
+        <!-- Certificate Information -->
+        <div class="cert-header-card">
+            <span class="hero-badge" style="margin-bottom: 15px;">Internship Verification</span>
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(135deg, #ffffff 0%, var(--color-text-secondary) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-heading); font-weight: 700;">
+                Web Development Intern
+            </h1>
+            <p style="color: var(--color-text-secondary); font-size: 1.1rem; max-width: 800px; margin-bottom: 20px; font-family: var(--font-body);">
+                Contributed to front-end development by building responsive web interfaces using HTML, CSS, JavaScript, and React. Handled REST API integrations and Git-based collaborative workflows.
+            </p>
+            <div class="cert-meta-info">
+                <div style="font-family: var(--font-heading); font-weight: 600; color: var(--color-teal); font-size: 1.1rem;">
+                    Macx Technologies
+                </div>
+                <div style="color: var(--color-text-dim); font-size: 0.95rem;">
+                    <i class="far fa-calendar-alt" style="margin-right: 6px;"></i> Duration: Feb 2024 - Mar 2024
+                </div>
+            </div>
+        </div>
+        
+        <!-- Certificate Image Display -->
+        <div class="cert-display-card">
+            <div class="image-wrapper" id="zoom-img">
+                <img src="../web_development_internship.jpeg" alt="Web Development Internship Certificate">
+            </div>
+            
+            <div class="download-action">
+                <a href="../web_development_internship.jpeg" download class="btn btn-primary btn-icon">
+                    <i class="fas fa-download"></i> Download Certificate Image
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GSAP for cursor glow -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        if (glow) {
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(glow, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            });
+        }
+        
+        // Simple zoom toggle logic
+        const zoomImg = document.getElementById('zoom-img');
+        let isZoomed = false;
+        if (zoomImg) {
+            zoomImg.addEventListener('click', () => {
+                isZoomed = !isZoomed;
+                if (isZoomed) {
+                    zoomImg.style.transform = 'scale(1.05)';
+                } else {
+                    zoomImg.style.transform = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

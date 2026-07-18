@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sivasankaran E | AI & Data Science Portfolio</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Portfolio of Sivasankaran E, B.Tech student in Artificial Intelligence & Data Science. Specializing in ML, data engineering, automation, and web development.">
+    <meta name="keywords" content="Sivasankaran, Portfolio, AI, Data Science, Python, Playwright, Streamlit, Web Development, B.Tech">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Chatbot Widget CSS -->
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+
+    <!-- Magnetic Glow Effect Background -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">SIVASANKARAN<span>.E</span></a>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#timeline" class="nav-link">Timeline</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#idcard-section" class="nav-link">ID Card</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#skills" class="mobile-link">Skills</a>
+        <a href="#timeline" class="mobile-link">Timeline</a>
+        <a href="#projects" class="mobile-link">Projects</a>
+        <a href="#idcard-section" class="mobile-link">ID Card</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">B.Tech Student & Developer</div>
+                <h1 class="hero-name">Sivasankaran E</h1>
+                <h2 class="hero-title">Artificial Intelligence & Data Science</h2>
+                
+                <!-- This description will be revealed/lit up when the lamp is on -->
+                <div class="hero-description-container">
+                    <p class="hero-description" id="hero-description">
+                        Building intelligent automation pipelines, end-to-end Machine Learning systems, and clean interactive dashboards. Eager to turn complex data problems into automated, production-ready solutions.
+                    </p>
+                </div>
+                
+                <div class="hero-actions" id="hero-actions">
+                    <a href="#projects" class="btn btn-primary">Explore Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+            </div>
+            
+            <div class="hero-interactive">
+                <!-- Clickable SVG Desk Lamp -->
+                <div class="lamp-container" id="lamp-container">
+                    <svg viewBox="0 0 400 500" class="desk-lamp" id="desk-lamp" width="100%" height="100%">
+                        <!-- Definitions for gradients and shadows -->
+                        <defs>
+                            <linearGradient id="lamp-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#343a40" />
+                                <stop offset="50%" stop-color="#495057" />
+                                <stop offset="100%" stop-color="#212529" />
+                            </linearGradient>
+                            <linearGradient id="lamp-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00f2fe" />
+                                <stop offset="100%" stop-color="#4facfe" />
+                            </linearGradient>
+                            <radialGradient id="bulb-glow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffd200" stop-opacity="1" />
+                                <stop offset="40%" stop-color="#ffb703" stop-opacity="0.8" />
+                                <stop offset="100%" stop-color="#ffd200" stop-opacity="0" />
+                            </radialGradient>
+                            <linearGradient id="light-beam-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#ffd200" stop-opacity="0.4" />
+                                <stop offset="30%" stop-color="#ffb703" stop-opacity="0.15" />
+                                <stop offset="100%" stop-color="#ffd200" stop-opacity="0.0" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Table / Base surface line -->
+                        <line x1="20" y1="460" x2="380" y2="460" stroke="#495057" stroke-width="4" stroke-linecap="round" />
+                        
+                        <!-- Light Beam (Polygon) representing the cone of light -->
+                        <polygon points="200,165 30,460 370,460" fill="url(#light-beam-gradient)" class="light-beam" id="light-beam" />
+                        
+                        <!-- Lamp Base -->
+                        <path d="M 150,450 C 150,440 250,440 250,450 Z" fill="url(#lamp-metal)" stroke="#1a1d20" stroke-width="2" />
+                        <rect x="185" y="435" width="30" height="10" rx="3" fill="#212529" />
+                        
+                        <!-- Red Switch Button on Base -->
+                        <circle cx="200" cy="445" r="5" fill="#e63946" class="lamp-switch" id="lamp-switch-btn" />
+                        
+                        <!-- Lower Arm / Springs -->
+                        <line x1="200" y1="435" x2="160" y2="300" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
+                        <circle cx="200" cy="435" r="7" fill="#212529" />
+                        
+                        <!-- Middle joint -->
+                        <circle cx="160" cy="300" r="7" fill="#212529" />
+                        
+                        <!-- Upper Arm -->
+                        <line x1="160" y1="300" x2="220" y2="150" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
+                        
+                        <!-- Top Joint/Pivot -->
+                        <circle cx="220" cy="150" r="8" fill="url(#lamp-accent)" />
+                        
+                        <!-- Lamp Shade Connector -->
+                        <path d="M 215,145 L 200,160 L 195,155 L 210,140 Z" fill="url(#lamp-metal)" />
+                        
+                        <!-- Lamp Shade Head -->
+                        <path d="M 170,165 C 170,140 230,140 230,165 Z" fill="url(#lamp-metal)" stroke="#1a1d20" stroke-width="2" />
+                        <!-- Lamp Rim -->
+                        <ellipse cx="200" cy="165" rx="30" ry="8" fill="#343a40" stroke="#1a1d20" stroke-width="1.5" />
+                        
+                        <!-- Light Bulb -->
+                        <circle cx="200" cy="167" r="10" fill="#dee2e6" class="lamp-bulb" id="lamp-bulb" />
+                        <circle cx="200" cy="167" r="22" fill="url(#bulb-glow)" class="lamp-bulb-glow" id="lamp-bulb-glow" />
+                        
+                        <!-- Switch Cord (Pull chain) hanging down -->
+                        <line x1="225" y1="160" x2="225" y2="220" stroke="#8d99ae" stroke-width="1.5" class="pull-chain" id="pull-chain-line" />
+                        <circle cx="225" cy="223" r="4" fill="url(#lamp-accent)" class="pull-chain-knob" id="pull-chain-knob" />
+                    </svg>
+                    <div class="lamp-hint">Click the lamp switch or chain to toggle light!</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span class="mouse">
+                <span class="wheel"></span>
+            </span>
+            <span class="label">Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">About Me</h2>
+            <div class="about-grid">
+                <div class="about-graphics fade-in">
+                    <!-- Creative Interactive Dashboard Graphic -->
+                    <div class="graphic-box">
+                        <div class="window-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="window-title">sivasankaran.py</span>
+                        </div>
+                        <div class="code-editor">
+                            <pre><code><span class="keyword">class</span> <span class="class-name">Developer</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="params">self</span>):
+        <span class="params">self</span>.name = <span class="string">"Sivasankaran E"</span>
+        <span class="params">self</span>.major = <span class="string">"AI & Data Science"</span>
+        <span class="params">self</span>.focus = [<span class="string">"ML"</span>, <span class="string">"Data Pipelines"</span>, <span class="string">"Automation"</span>]
+        
+    <span class="keyword">def</span> <span class="function">get_profile</span>(<span class="params">self</span>):
+        <span class="keyword">return</span> {
+            <span class="string">"status"</span>: <span class="string">"Eager to automate and analyze"</span>,
+            <span class="string">"favorite_tool"</span>: <span class="string">"Python / Playwright"</span>,
+            <span class="string">"gpa"</span>: <span class="number">8.3</span>
+        }</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text fade-in">
+                    <p class="lead">
+                        I am an AI & Data Science B.Tech student with a passion for building systems that automate repetitive work and transform raw data into functional intelligence.
+                    </p>
+                    <p>
+                        With real-world experience as a Web Development Intern, I blend robust backend programming in Python, database engineering (MySQL/PostgreSQL), and process automation (Playwright web scraping) with clean front-end logic in HTML, CSS, JavaScript, and React. 
+                    </p>
+                    <p>
+                        Whether building LLM-integrated automation pipelines or architecting time-series energy dashboards, I focus on performance, normalization, and modular structure.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-number">3+</span>
+                            <span class="highlight-label">Self-driven Projects</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">8.3</span>
+                            <span class="highlight-label">B.Tech CGPA</span>
+                        </div>
+                        <div class="highlight-item">
+                            <span class="highlight-number">6</span>
+                            <span class="highlight-label">Industry Certifications</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">My Skillset</h2>
+            <p class="section-subtitle">A compilation of languages, tools, and methodologies that I specialize in.</p>
+            
+            <div class="skills-tabs">
+                <button class="tab-btn active" data-category="all">All</button>
+                <button class="tab-btn" data-category="languages">Languages & DBs</button>
+                <button class="tab-btn" data-category="ml-data">ML & Data</button>
+                <button class="tab-btn" data-category="automation">Automation & Web</button>
+            </div>
+            
+            <div class="skills-grid">
+                <!-- Skill 1 -->
+                <div class="skill-card fade-in" data-category="languages">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fab fa-python skill-icon-python"></i> Python</span>
+                        <span class="skill-percentage">75%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="75%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="skill-card fade-in" data-category="languages">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fas fa-database skill-icon-db"></i> Databases (MySQL, PostgreSQL, SQLite)</span>
+                        <span class="skill-percentage">70%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="70%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-card fade-in" data-category="automation">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fab fa-html5 skill-icon-html"></i> HTML5 & CSS3</span>
+                        <span class="skill-percentage">68%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="68%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-card fade-in" data-category="automation">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fab fa-js skill-icon-js"></i> JavaScript & React (Frameworks)</span>
+                        <span class="skill-percentage">60%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="60%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="skill-card fade-in" data-category="ml-data">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fas fa-brain skill-icon-ml"></i> Machine Learning & Scikit-learn</span>
+                        <span class="skill-percentage">72%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="72%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="skill-card fade-in" data-category="ml-data">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fas fa-chart-line skill-icon-data"></i> Data Analysis (Pandas, NumPy, Matplotlib, Seaborn)</span>
+                        <span class="skill-percentage">74%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="74%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 7 -->
+                <div class="skill-card fade-in" data-category="automation">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fas fa-robot skill-icon-bot"></i> Web Automation (Playwright, APScheduler)</span>
+                        <span class="skill-percentage">71%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="71%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill 8 -->
+                <div class="skill-card fade-in" data-category="automation">
+                    <div class="skill-info">
+                        <span class="skill-name"><i class="fas fa-server skill-icon-srv"></i> Streamlit & Flask (basic)</span>
+                        <span class="skill-percentage">65%</span>
+                    </div>
+                    <div class="skill-bar-bg">
+                        <div class="skill-bar-fill" data-width="65%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tech Badges Cloud -->
+            <div class="tech-cloud fade-in">
+                <h4>Other tools & concepts:</h4>
+                <div class="badge-container">
+                    <span class="tech-badge">LLM APIs (Groq, Gemini)</span>
+                    <span class="tech-badge">Git & GitHub</span>
+                    <span class="tech-badge">VS Code</span>
+                    <span class="tech-badge">Jupyter Notebooks</span>
+                    <span class="tech-badge">APScheduler</span>
+                    <span class="tech-badge">REST APIs</span>
+                    <span class="tech-badge">ETL Processes</span>
+                    <span class="tech-badge">Bootstrap</span>
+                    <span class="tech-badge">Data Visualization (Matplotlib, Seaborn)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic & Internship Timeline -->
+    <section class="timeline-section" id="timeline">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">My Timeline</h2>
+            <p class="section-subtitle">Academic journey, professional internship, and notable milestones.</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/prompt_engineering.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Jul 2026</div>
+                        <h3 class="timeline-title">Foundations of Prompt Engineering <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">AWS Training & Certification</h4>
+                        <p>Mastered core prompt design techniques, prompt engineering methodologies, and optimization rules for Large Language Models.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/data_processing.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Jul 2026</div>
+                        <h3 class="timeline-title">Data Processing and Visualization <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">NASSCOM FutureSkills Prime</h4>
+                        <p>Acquired hands-on experience in processing large datasets and creating impactful visual representations to support data-driven decision-making.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="auma/index.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Jun - Jul 2026</div>
+                        <h3 class="timeline-title">Internship Automation System <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Major Project Milestones</h4>
+                        <p>Designed and built an end-to-end scraper & auto-filler automation using Python, Playwright, SQLite, Streamlit, and Groq/Gemini models, automating applicant pipelines with customizable filters.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/data_engineering.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Mar 2026</div>
+                        <h3 class="timeline-title">Introduction to Data Engineering <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">IBM (via Coursera)</h4>
+                        <p>Completed professional training in database design, ETL pipelines, data warehousing, and working with SQL/NoSQL databases.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/claude_code.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Feb 2026</div>
+                        <h3 class="timeline-title">Claude Code in Action <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Anthropic</h4>
+                        <p>Learned advanced prompting, multi-agent pipelines, and coding assistant usage to accelerate software development workflows.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 6 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/generative_ai.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Jan 2026</div>
+                        <h3 class="timeline-title">Generative AI for All <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Infosys Springboard</h4>
+                        <p>Explored foundational LLMs, prompt engineering, agentic concepts, and the ethical integration of generative AI tools.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 7 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="learno/index.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Aug - Nov 2025</div>
+                        <h3 class="timeline-title">Learning Progress Tracker <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Major Project Milestones</h4>
+                        <p>A normalized MySQL/Streamlit web app enabling users to log courses, track goals, and analyze study velocity with plotly visualizations.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 8 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/data_analytics.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Feb - Apr 2025</div>
+                        <h3 class="timeline-title">Data Analytics Professional Certificate <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">NoviTech R&D</h4>
+                        <p>Specialized training covering data manipulation, predictive models, exploratory data analysis, and dashboard visualization.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 9 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="certi/internship.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Feb 2024 - Mar 2024</div>
+                        <h3 class="timeline-title">Web Development Intern <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Macx Technologies</h4>
+                        <p>Contributed to front-end development by building responsive web interfaces using HTML, CSS, JavaScript, and React. Handled REST API integrations and Git-based collaborative workflows.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 10 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <a href="energy_mgmt/index.html" class="timeline-content timeline-content-link">
+                        <div class="timeline-date">Feb - Mar 2024</div>
+                        <h3 class="timeline-title">WattWise: Smart Energy Optimization <i class="fas fa-external-link-alt timeline-link-icon"></i></h3>
+                        <h4 class="timeline-subtitle">Major Project Milestones</h4>
+                        <p>Full-stack AI-powered energy monitoring and optimization platform with predictive analytics, recommendations, and chatbots.</p>
+                    </a>
+                </div>
+
+                <!-- Timeline Item 11 -->
+                <div class="timeline-item left-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023 - 2027</div>
+                        <h3 class="timeline-title">B.Tech in AI & Data Science</h3>
+                        <h4 class="timeline-subtitle">IFET College of Engineering, Villupuram</h4>
+                        <p>Pursuing undergraduate studies with an 8.3 CGPA. Coursework includes Machine Learning, Data Structures & Algorithms, DBMS, Big Data Analytics, and AI Ethics.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 12 -->
+                <div class="timeline-item right-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 - 2023</div>
+                        <h3 class="timeline-title">Higher Secondary (Class XII)</h3>
+                        <h4 class="timeline-subtitle">St. John's Higher Secondary School</h4>
+                        <p>Specialized in Computer Science. Graduated with an overall percentage of 89%.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">Featured Projects</h2>
+            <p class="section-subtitle">Self-driven projects solving real-world challenges. Hover to experience 3D tilt, click to read details.</p>
+            
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card fade-in" data-modal="modal-automation">
+                    <div class="project-card-inner">
+                        <div class="project-image-placeholder orange-grad">
+                            <i class="fas fa-robot project-icon"></i>
+                            <div class="project-date">Jun - Jul 2026</div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Internship Automation System</h3>
+                            <p class="project-excerpt">End-to-end automation tool scraping listings from Internshala, LinkedIn, and Unstop using Playwright and LLM-generated custom cover letters.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Playwright</span>
+                                <span class="project-tag">SQLite</span>
+                                <span class="project-tag">Streamlit</span>
+                                <span class="project-tag">LLM APIs</span>
+                            </div>
+                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card fade-in" data-modal="modal-tracker">
+                    <div class="project-card-inner">
+                        <div class="project-image-placeholder blue-grad">
+                            <i class="fas fa-tasks project-icon"></i>
+                            <div class="project-date">Aug - Nov 2025</div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">Learning Progress Tracker</h3>
+                            <p class="project-excerpt">A normalized MySQL/Streamlit web app enabling users to log courses, track goals, and analyze study velocity with plotly visualizations.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">MySQL</span>
+                                <span class="project-tag">Streamlit</span>
+                            </div>
+                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card fade-in" data-modal="modal-wattwise">
+                    <div class="project-card-inner">
+                        <div class="project-image-placeholder purple-grad">
+                            <i class="fas fa-bolt project-icon"></i>
+                            <div class="project-date">Feb - Mar 2024</div>
+                        </div>
+                        <div class="project-info">
+                            <h3 class="project-title">WattWise: Smart Energy Optimization</h3>
+                            <p class="project-excerpt">Full-stack AI-powered energy monitoring and optimization platform with predictive analytics, recommendations, and chatbots.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Next.js</span>
+                                <span class="project-tag">React</span>
+                                <span class="project-tag">TailwindCSS</span>
+                                <span class="project-tag">Google Genkit</span>
+                                <span class="project-tag">Gemini AI</span>
+                            </div>
+                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive ID Card Section -->
+    <section class="idcard-section" id="idcard-section">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">Interactive ID Card</h2>
+            <p class="section-subtitle">Click the ID card to flip it and access contact information & links.</p>
+            
+            <div class="idcard-viewport">
+                <!-- Lanyard Lanyard Top Strap -->
+                <div class="lanyard-strap" id="lanyard-strap"></div>
+                <!-- Card Clip Holder -->
+                <div class="lanyard-clip" id="lanyard-clip"></div>
+                
+                <!-- The 3D Swinging & Flipping Card Container -->
+                <div class="id-card-container" id="id-card-container">
+                    <div class="id-card" id="id-card">
+                        
+                        <!-- Front Face of Card -->
+                        <div class="id-card-face id-card-front">
+                            <div class="id-card-header">
+                                <div class="id-card-org">IFET COLLEGE OF ENGINEERING</div>
+                                <div class="id-card-dept">AI & DATA SCIENCE</div>
+                            </div>
+                            <div class="id-card-body">
+                                <div class="id-card-photo-area">
+                                    <div class="id-card-photo">
+                                        <img src="profile.jpeg" alt="Sivasankaran E" class="id-photo">
+                                    </div>
+                                </div>
+                                <div class="id-card-details">
+                                    <div class="id-card-name">Sivasankaran E</div>
+                                    <div class="id-card-role">B.Tech Student</div>
+                                    <div class="id-card-meta">
+                                        <div class="id-meta-item">
+                                            <span class="label">BATCH:</span> <span class="value">2023 - 2027</span>
+                                        </div>
+                                        <div class="id-meta-item">
+                                            <span class="label">ID NO:</span> <span class="value">47</span>
+                                        </div>
+                                        <div class="id-meta-item">
+                                            <span class="label">CGPA:</span> <span class="value">8.3 / 10.0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="id-card-footer">
+                                <div class="barcode">
+                                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                                <div class="flip-hint"><i class="fas fa-sync-alt"></i> Click to Flip</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Back Face of Card -->
+                        <div class="id-card-face id-card-back">
+                            <div class="id-card-header">
+                                <div class="id-card-org">CONTACT DETAILS</div>
+                                <div class="id-card-dept">Get In Touch</div>
+                            </div>
+                            <div class="id-card-back-body">
+                                <ul class="contact-links-list">
+                                    <li>
+                                        <a href="mailto:sivasankaranelu2006@gmail.com" class="id-contact-link">
+                                            <i class="fas fa-envelope"></i> sivasankaranelu2006@gmail.com
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="tel:+919360641905" class="id-contact-link">
+                                            <i class="fas fa-phone-alt"></i> +91 9360641905
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/in/sivasankaran-e-0ba199292/" target="_blank" rel="noopener noreferrer" class="id-contact-link">
+                                            <i class="fab fa-linkedin"></i> LinkedIn Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/Siva47th" target="_blank" rel="noopener noreferrer" class="id-contact-link">
+                                            <i class="fab fa-github"></i> GitHub Profile
+                                        </a>
+                                    </li>
+                                </ul>
+                                
+                                <div class="id-download-box">
+                                    <a href="certi/Sivasankaran_E_Resume_jul18.pdf" download class="btn btn-primary btn-sm btn-icon">
+                                        <i class="fas fa-download"></i> Download Resume PDF
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="id-card-footer">
+                                <div class="motto">Code · Build · Automate</div>
+                                <div class="flip-hint"><i class="fas fa-sync-alt"></i> Click to Flip</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-container">
+            <h2 class="section-title text-reveal">Get In Touch</h2>
+            <p class="section-subtitle">Have a project or opportunity? Send a message and let's collaborate.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info-panel fade-in">
+                    <h3>Contact Information</h3>
+                    <p class="contact-intro">Feel free to reach out to me via my direct channels or the contact form.</p>
+                    
+                    <div class="contact-info-items">
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:sivasankaranelu2006@gmail.com">sivasankaranelu2006@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone-alt contact-icon"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <a href="tel:+919360641905">+91-9360641905</a>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <span>Villupuram, Tamil Nadu, India</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-social-icons">
+                                        <a href="https://www.linkedin.com/in/sivasankaran-e-0ba199292/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="https://github.com/Siva47th" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                                    </div>
+                </div>
+                
+                <div class="contact-form-panel fade-in">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="form-name">Name</label>
+                            <input type="text" id="form-name" name="from_name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-email">Email</label>
+                            <input type="email" id="form-email" name="from_email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-message">Message</label>
+                            <textarea id="form-message" name="message" rows="5" placeholder="Let's build something awesome..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full" id="form-submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sivasankaran E. All rights reserved.</p>
+                <p>Designed with micro-interactions & GSAP.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Modal Overlay & Modals -->
+    <div class="modal-overlay" id="modal-overlay">
+        
+        <!-- Modal: Automation System -->
+        <div class="modal-box" id="modal-automation">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <span class="modal-date">Jun - Jul 2026</span>
+                <h2 class="modal-title">Internship Application Automation System</h2>
+                <div class="modal-tags">
+                    <span class="modal-tag">Python</span>
+                    <span class="modal-tag">Playwright</span>
+                    <span class="modal-tag">SQLite</span>
+                    <span class="modal-tag">Streamlit</span>
+                    <span class="modal-tag">LLM APIs</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3>Project Overview</h3>
+                <p>An end-to-end automation pipeline designed to scrape internship listings across multiple platforms (Internshala, LinkedIn, and Unstop) using Playwright, filtering them against user credentials, generating tailored cover letters, and auto-filling forms to save hundreds of hours of manual entry.</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Multi-Platform Scraping:</strong> Playwright scripts to navigate and extract dynamic job card listings.</li>
+                    <li><strong>Custom Matching Engine:</strong> Scored and filtered listing descriptions against user skills and experience to find optimal matches.</li>
+                    <li><strong>Generative AI Integration:</strong> Integrates Groq LLM API (Llama 3.1 70B) for instant customized cover letter generation, using Google Gemini API as a backup.</li>
+                    <li><strong>Local Storage & Control:</strong> Lightweight SQLite database for storage and Streamlit analytics dashboard monitoring the pipelines.</li>
+                    <li><strong>Automation & Alerts:</strong> Configured APScheduler for automated timed scripts and Google SMTP API for email notification alerts.</li>
+                </ul>
+                <div class="modal-actions" style="margin-top: 30px;">
+                    <a href="auma/index.html" class="btn btn-primary btn-sm btn-icon">
+                        <i class="fas fa-images"></i> View Screenshots Showcase
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: Learning Progress Tracker -->
+        <div class="modal-box" id="modal-tracker">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <span class="modal-date">Aug - Nov 2025</span>
+                <h2 class="modal-title">Learning Progress Tracker Dashboard</h2>
+                <div class="modal-tags">
+                    <span class="modal-tag">Python</span>
+                    <span class="modal-tag">MySQL</span>
+                    <span class="modal-tag">Streamlit</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3>Project Overview</h3>
+                <p>A personal learning management web app that enables users to structure their studies, log completed courses, track weekly goals, and render beautiful analytics showing studying velocity, consistency streaks, and completion rates.</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Normalized Database Schema:</strong> Structured MySQL database tables for topics, courses, progress logs, tags, and priorities, enforcing referential integrity.</li>
+                    <li><strong>Interactive Streamlit Dashboard:</strong> User interface offering dynamic filters (by status, domain, priority) for instant study tracking.</li>
+                    <li><strong>Data Visualization:</strong> Built analytical tools rendering weekly study hours, completion trends, and streaks using interactive Plotly charts.</li>
+                    <li><strong>Secure Architecture:</strong> Applied secure environment handling via python-dotenv and MVC (Model-View-Controller) folder organization.</li>
+                </ul>
+                <div class="modal-actions" style="margin-top: 30px;">
+                    <a href="learno/index.html" class="btn btn-primary btn-sm btn-icon">
+                        <i class="fas fa-images"></i> View Screenshots Showcase
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: WattWise Platform -->
+        <div class="modal-box" id="modal-wattwise">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <span class="modal-date">Feb - Mar 2024</span>
+                <h2 class="modal-title">WattWise: Smart Energy Optimization Platform</h2>
+                <div class="modal-tags">
+                    <span class="modal-tag">Next.js</span>
+                    <span class="modal-tag">React</span>
+                    <span class="modal-tag">TailwindCSS</span>
+                    <span class="modal-tag">Google Genkit</span>
+                    <span class="modal-tag">Gemini AI</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h3>Project Overview</h3>
+                <p>Built a full-stack AI-powered energy monitoring and optimization platform using Next.js 15 (App Router), React 18, and TailwindCSS, with a shadcn/ui and Radix UI component library for a responsive dashboard experience.</p>
+                
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Interactive Dashboard:</strong> Developed an interactive single-pane-of-glass energy dashboard integrating real-time consumption monitoring, CSV/JSON historical log uploads, Recharts visualizations, and goal-setting and tracking widgets.</li>
+                    <li><strong>AI flows (Google Genkit):</strong> Engineered three Google Genkit AI flows powered by Gemini 2.0 Flash: an energy consumption predictor, a personalized energy-saving advisor, and a conversational energy assistant chatbot.</li>
+                    <li><strong>State Management:</strong> Implemented TanStack Query (react-query) for efficient client-side state management and asynchronous data fetching across dashboard widgets.</li>
+                    <li><strong>Backend & Bundling:</strong> Integrated Firebase SDK for backend data persistence and configured Turbopack for optimized, fast production builds.</li>
+                </ul>
+                <div class="modal-actions" style="margin-top: 30px;">
+                    <a href="energy_mgmt/index.html" class="btn btn-primary btn-sm btn-icon">
+                        <i class="fas fa-images"></i> View Screenshots Showcase
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Success/Toast Notification for Contact Form -->
+    <div class="toast-notification" id="toast-notification">
+        <div class="toast-content">
+            <i class="fas fa-check-circle toast-icon"></i>
+            <div class="toast-message">
+                <h4>Success!</h4>
+                <p>Your message has been sent successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GSAP (GreenSock Animation Platform) CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    
+    <!-- Chatbot Widget JS -->
+    <script src="chatbot.js"></script>
+</body>
+</html>

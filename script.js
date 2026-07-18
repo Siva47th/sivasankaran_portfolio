@@ -167,7 +167,17 @@ function initDeskLamp() {
     const pullChainKnob = document.getElementById('pull-chain-knob');
     const heroDescription = document.getElementById('hero-description');
     
-    let lampIsOn = false;
+    const savedState = localStorage.getItem('lampState');
+    let lampIsOn = savedState === 'on';
+
+    // Synchronize initial document body state immediately to avoid screen flash
+    if (lampIsOn) {
+        document.body.classList.add('lamp-on');
+        gsap.set(heroDescription, { filter: "brightness(1.2)" });
+    } else {
+        document.body.classList.remove('lamp-on');
+        gsap.set(heroDescription, { filter: "brightness(0.6)" });
+    }
 
     // Toggle Light Function
     function toggleLamp(playChainAnimation = false) {
@@ -175,6 +185,7 @@ function initDeskLamp() {
         
         if (lampIsOn) {
             document.body.classList.add('lamp-on');
+            localStorage.setItem('lampState', 'on');
             
             // Trigger text reveal animation
             gsap.fromTo(heroDescription, 
@@ -191,6 +202,7 @@ function initDeskLamp() {
             );
         } else {
             document.body.classList.remove('lamp-on');
+            localStorage.setItem('lampState', 'off');
             gsap.to(heroDescription, {
                 filter: "brightness(0.6)",
                 duration: 0.5
@@ -234,9 +246,9 @@ function initDeskLamp() {
         });
     }
 
-    // Auto turn-on after 2 seconds
+    // Auto turn-on after 2 seconds only on first visit (when no preference has been saved yet)
     setTimeout(() => {
-        if (!lampIsOn) {
+        if (savedState === null && !lampIsOn) {
             toggleLamp(true);
         }
     }, 2000);

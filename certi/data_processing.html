@@ -84,6 +84,15 @@
             }
         }
     </style>
+    <!-- Theme State Recovery -->
+    <script>
+        if (localStorage.getItem('lampState') === 'on') {
+            document.documentElement.classList.add('lamp-on');
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.classList.add('lamp-on');
+            });
+        }
+    </script>
 </head>
 <body class="showcase-body">
 

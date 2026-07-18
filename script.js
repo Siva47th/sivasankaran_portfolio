@@ -26,6 +26,7 @@ function initNavbar() {
     const navbar = document.getElementById('navbar');
     const navToggle = document.getElementById('nav-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
 
     // Add backdrop style on scroll
@@ -37,17 +38,40 @@ function initNavbar() {
         }
     });
 
+    // Toggle menu
+    function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.toggle('open');
+        navToggle.classList.toggle('active', isOpen);
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.classList.toggle('open', isOpen);
+        }
+    }
+
+    // Close menu
+    function closeMobileMenu() {
+        navToggle.classList.remove('active');
+        mobileMenu.classList.remove('open');
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.classList.remove('open');
+        }
+    }
+
     // Mobile menu toggle
     navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        mobileMenu.classList.toggle('open');
+        toggleMobileMenu();
     });
+
+    // Close menu when clicking outside (on the backdrop overlay)
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+    }
 
     // Close menu when a link is clicked
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            navToggle.classList.remove('active');
-            mobileMenu.classList.remove('open');
+            closeMobileMenu();
             
             // Set active class
             if(link.classList.contains('nav-link')) {
@@ -323,6 +347,7 @@ function initSkillBars() {
 function initTimelineScroll() {
     const leftItems = document.querySelectorAll('.timeline-item.left-item');
     const rightItems = document.querySelectorAll('.timeline-item.right-item');
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
     leftItems.forEach(item => {
         // Animate the timeline-item itself since it has fade-in class
@@ -337,16 +362,19 @@ function initTimelineScroll() {
             ease: "power2.out"
         });
         
+        // On mobile, animate vertically (y: 30) instead of horizontally (x: -50) to prevent overflow-x scrollbars
+        const startState = isMobile ? { y: 30, x: 0, opacity: 0.5 } : { x: -50, y: 0, opacity: 0.5 };
+        const endState = isMobile ? { y: 0, x: 0, opacity: 1 } : { x: 0, y: 0, opacity: 1 };
+        
         // Stagger or slide the interior content
         gsap.fromTo(item.querySelector('.timeline-content'), 
-            { x: -50, opacity: 0.5 },
+            startState,
             {
                 scrollTrigger: {
                     trigger: item,
                     start: "top 85%",
                 },
-                x: 0,
-                opacity: 1,
+                ...endState,
                 duration: 0.85,
                 ease: "power2.out"
             }
@@ -366,16 +394,19 @@ function initTimelineScroll() {
             ease: "power2.out"
         });
 
+        // On mobile, animate vertically (y: 30) instead of horizontally (x: 50) to prevent overflow-x scrollbars
+        const startState = isMobile ? { y: 30, x: 0, opacity: 0.5 } : { x: 50, y: 0, opacity: 0.5 };
+        const endState = isMobile ? { y: 0, x: 0, opacity: 1 } : { x: 0, y: 0, opacity: 1 };
+
         // Stagger or slide the interior content
         gsap.fromTo(item.querySelector('.timeline-content'), 
-            { x: 50, opacity: 0.5 },
+            startState,
             {
                 scrollTrigger: {
                     trigger: item,
                     start: "top 85%",
                 },
-                x: 0,
-                opacity: 1,
+                ...endState,
                 duration: 0.85,
                 ease: "power2.out"
             }
@@ -404,42 +435,47 @@ function initProjectCards() {
         ease: "power2.out"
     });
 
-    // 2. Custom 3D Tilt Effect on hover
+    // 2. Custom 3D Tilt Effect on hover (Only for desktop devices that support hover interaction)
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
+    if (supportsHover) {
+        cards.forEach(card => {
+            const inner = card.querySelector('.project-card-inner');
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                // Calculate mouse coordinates relative to card center (normalized between -1 and 1)
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                
+                // Maximum tilt angle (in degrees)
+                const maxTilt = 10;
+                
+                // Rotate card on X and Y based on cursor position
+                gsap.to(inner, {
+                    rotateY: x * maxTilt,
+                    rotateX: -y * maxTilt,
+                    scale: 1.02,
+                    transformPerspective: 1000,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                // Reset rotation back to 0
+                gsap.to(inner, {
+                    rotateY: 0,
+                    rotateX: 0,
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            });
+        });
+    }
+
+    // 3. Modal Opening (All devices)
     cards.forEach(card => {
-        const inner = card.querySelector('.project-card-inner');
-        
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            // Calculate mouse coordinates relative to card center (normalized between -1 and 1)
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
-            // Maximum tilt angle (in degrees)
-            const maxTilt = 10;
-            
-            // Rotate card on X and Y based on cursor position
-            gsap.to(inner, {
-                rotateY: x * maxTilt,
-                rotateX: -y * maxTilt,
-                scale: 1.02,
-                transformPerspective: 1000,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        });
-
-        card.addEventListener('mouseleave', () => {
-            // Reset rotation back to 0
-            gsap.to(inner, {
-                rotateY: 0,
-                rotateX: 0,
-                scale: 1,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        });
-
-        // 3. Modal Opening
         card.addEventListener('click', () => {
             const modalId = card.getAttribute('data-modal');
             const targetModal = document.getElementById(modalId);
@@ -521,7 +557,7 @@ function initIDCard() {
         ease: "power3.out"
     });
 
-    // Flip card when clicked
+    // Flip card when clicked (All devices)
     cardContainer.addEventListener('click', (e) => {
         // Prevent click events inside download links/social links from reflipping the card
         if (e.target.closest('a')) {
@@ -540,39 +576,42 @@ function initIDCard() {
         });
     });
 
-    // Hover effect: add inertia to pendulum swing on mouse hover
-    cardContainer.addEventListener('mouseenter', () => {
-        // Stop current css keyframe animation gently and let JS add mouse follow tilt
-        cardContainer.style.animationPlayState = 'paused';
-    });
-
-    cardContainer.addEventListener('mousemove', (e) => {
-        const rect = cardContainer.getBoundingClientRect();
-        // Calculate coordinate offsets relative to center
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
-        // Tilt the whole container based on mouse movement (representing pendulum motion)
-        gsap.to(cardContainer, {
-            rotate: x * 6,
-            y: y * 8,
-            duration: 0.3,
-            ease: "power2.out"
+    // Hover effect: add inertia to pendulum swing on mouse hover (Only for hoverable desktop screens)
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
+    if (supportsHover) {
+        cardContainer.addEventListener('mouseenter', () => {
+            // Stop current css keyframe animation gently and let JS add mouse follow tilt
+            cardContainer.style.animationPlayState = 'paused';
         });
-    });
 
-    cardContainer.addEventListener('mouseleave', () => {
-        // Resume pendulum keyframe animation smoothly
-        gsap.to(cardContainer, {
-            rotate: 0,
-            y: 0,
-            duration: 0.8,
-            ease: "elastic.out(1, 0.3)",
-            onComplete: () => {
-                cardContainer.style.animationPlayState = 'running';
-            }
+        cardContainer.addEventListener('mousemove', (e) => {
+            const rect = cardContainer.getBoundingClientRect();
+            // Calculate coordinate offsets relative to center
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            
+            // Tilt the whole container based on mouse movement (representing pendulum motion)
+            gsap.to(cardContainer, {
+                rotate: x * 6,
+                y: y * 8,
+                duration: 0.3,
+                ease: "power2.out"
+            });
         });
-    });
+
+        cardContainer.addEventListener('mouseleave', () => {
+            // Resume pendulum keyframe animation smoothly
+            gsap.to(cardContainer, {
+                rotate: 0,
+                y: 0,
+                duration: 0.8,
+                ease: "elastic.out(1, 0.3)",
+                onComplete: () => {
+                    cardContainer.style.animationPlayState = 'running';
+                }
+            });
+        });
+    }
 }
 
 /* ==========================================

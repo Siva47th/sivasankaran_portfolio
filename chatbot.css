@@ -116,6 +116,25 @@
     gap: 12px;
 }
 
+.chatbot-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text-dim);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    border-radius: 50%;
+}
+
+.chatbot-close-btn:hover {
+    color: var(--color-teal);
+    background: rgba(255, 255, 255, 0.05);
+}
+
 .chatbot-avatar {
     width: 40px;
     height: 40px;
@@ -340,14 +359,15 @@
     .chatbot-container {
         right: 10px;
         left: 10px;
-        bottom: 100px;
+        bottom: 85px;
         width: auto;
-        max-height: 480px;
+        max-height: calc(100vh - 105px);
+        border-radius: 16px;
     }
 
     .chatbot-fab {
-        bottom: 20px;
-        right: 20px;
+        bottom: 16px;
+        right: 16px;
         width: 54px;
         height: 54px;
     }

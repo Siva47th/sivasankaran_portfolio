@@ -235,6 +235,9 @@
                     <h4>Portfolio Assistant</h4>
                     <span>Online — Ask me anything</span>
                 </div>
+                <button class="chatbot-close-btn" id="chatbot-close" aria-label="Close chatbot">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             <div class="chatbot-messages" id="chatbot-messages"></div>
             <div class="chat-suggestions" id="chat-suggestions"></div>
@@ -264,9 +267,9 @@
         let isOpen = false;
         let hasGreeted = false;
 
-        // Toggle chat
-        fab.addEventListener('click', () => {
-            isOpen = !isOpen;
+        // Toggle chat function
+        function toggleChat(forceState) {
+            isOpen = (forceState !== undefined) ? forceState : !isOpen;
             fab.classList.toggle('active', isOpen);
             container.classList.toggle('open', isOpen);
 
@@ -279,7 +282,21 @@
             if (isOpen) {
                 setTimeout(() => input.focus(), 350);
             }
+        }
+
+        // Toggle chat
+        fab.addEventListener('click', () => {
+            toggleChat();
         });
+
+        // Close button click listener
+        const closeBtn = document.getElementById('chatbot-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat(false);
+            });
+        }
 
         // Send message
         function handleSend() {

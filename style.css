@@ -323,6 +323,7 @@ a {
     background: transparent;
     border: none;
     cursor: pointer;
+    z-index: 1001; /* Ensure toggle button stays above the menu overlay */
 }
 
 .nav-toggle span {
@@ -331,6 +332,41 @@ a {
     background-color: var(--color-text-primary);
     border-radius: 2px;
     transition: var(--transition-smooth);
+    transform-origin: center;
+}
+
+/* Hamburger active state animation */
+.nav-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay Backdrop */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(4, 5, 8, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 998; /* Directly below mobile-menu (999) */
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.mobile-menu-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Mobile Menu */
@@ -1796,6 +1832,11 @@ a {
 }
 
 @media (max-width: 900px) {
+    /* Hide cursor glow on touch devices for performance & touch event optimization */
+    .cursor-glow {
+        display: none !important;
+    }
+
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1875,6 +1916,11 @@ a {
     .highlight-number {
         font-size: 1.85rem;
     }
+
+    .about-highlights {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
     
     .id-card-container {
         width: 290px;
@@ -1882,5 +1928,55 @@ a {
     
     .contact-info-panel, .contact-form-panel {
         padding: 24px;
+    }
+}
+
+/* ==========================================
+   Certificate PDF Mobile Fallback Message
+   ========================================== */
+.pdf-fallback-message {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 20px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.pdf-fallback-message i {
+    font-size: 3rem;
+    color: var(--color-teal);
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.4));
+}
+
+.pdf-fallback-message p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+}
+
+.pdf-fallback-message span {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-family: var(--font-body);
+}
+
+@media (max-width: 768px) {
+    .pdf-wrapper iframe {
+        display: none !important;
+    }
+    .pdf-wrapper {
+        height: auto !important;
+        min-height: 220px;
+    }
+    .pdf-fallback-message {
+        display: flex;
     }
 }

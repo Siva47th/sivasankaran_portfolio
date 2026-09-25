@@ -20,6 +20,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     
+    <!-- Tailwind CSS CDN removed: site uses custom CSS system -->
+    
     <!-- Chatbot Widget CSS -->
     <link rel="stylesheet" href="chatbot.css">
 </head>
@@ -27,6 +29,16 @@
 
     <!-- Magnetic Glow Effect Background -->
     <div class="cursor-glow" id="cursor-glow"></div>
+    
+    <!-- Floating Particles Background -->
+    <canvas id="particles-canvas" class="particles-canvas"></canvas>
+    
+    <!-- Aurora Gradient Background -->
+    <div class="aurora-bg">
+        <div class="aurora-blob aurora-1"></div>
+        <div class="aurora-blob aurora-2"></div>
+        <div class="aurora-blob aurora-3"></div>
+    </div>
 
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
@@ -88,10 +100,17 @@
                     <svg viewBox="0 0 400 500" class="desk-lamp" id="desk-lamp" width="100%" height="100%">
                         <!-- Definitions for gradients and shadows -->
                         <defs>
+                            <!-- Sleek Brushed Aluminum / Chrome Metal -->
                             <linearGradient id="lamp-metal" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#343a40" />
-                                <stop offset="50%" stop-color="#495057" />
-                                <stop offset="100%" stop-color="#212529" />
+                                <stop offset="0%" stop-color="#cbd5e1" />
+                                <stop offset="40%" stop-color="#94a3b8" />
+                                <stop offset="70%" stop-color="#64748b" />
+                                <stop offset="100%" stop-color="#475569" />
+                            </linearGradient>
+                            <linearGradient id="lamp-metal-bright" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#f8fafc" />
+                                <stop offset="50%" stop-color="#cbd5e1" />
+                                <stop offset="100%" stop-color="#94a3b8" />
                             </linearGradient>
                             <linearGradient id="lamp-accent" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" stop-color="#00f2fe" />
@@ -103,55 +122,55 @@
                                 <stop offset="100%" stop-color="#ffd200" stop-opacity="0" />
                             </radialGradient>
                             <linearGradient id="light-beam-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#ffd200" stop-opacity="0.4" />
-                                <stop offset="30%" stop-color="#ffb703" stop-opacity="0.15" />
+                                <stop offset="0%" stop-color="#ffd200" stop-opacity="0.35" />
+                                <stop offset="40%" stop-color="#ffb703" stop-opacity="0.12" />
                                 <stop offset="100%" stop-color="#ffd200" stop-opacity="0.0" />
                             </linearGradient>
                         </defs>
                         
                         <!-- Table / Base surface line -->
-                        <line x1="20" y1="460" x2="380" y2="460" stroke="#495057" stroke-width="4" stroke-linecap="round" />
+                        <line x1="20" y1="460" x2="380" y2="460" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
                         
                         <!-- Light Beam (Polygon) representing the cone of light -->
                         <polygon points="200,165 30,460 370,460" fill="url(#light-beam-gradient)" class="light-beam" id="light-beam" />
                         
                         <!-- Lamp Base -->
-                        <path d="M 150,450 C 150,440 250,440 250,450 Z" fill="url(#lamp-metal)" stroke="#1a1d20" stroke-width="2" />
-                        <rect x="185" y="435" width="30" height="10" rx="3" fill="#212529" />
+                        <path d="M 150,450 C 150,438 250,438 250,450 Z" fill="url(#lamp-metal-bright)" stroke="#475569" stroke-width="2" />
+                        <rect x="185" y="434" width="30" height="11" rx="3" fill="#64748b" stroke="#94a3b8" stroke-width="1" />
                         
                         <!-- Red Switch Button on Base -->
-                        <circle cx="200" cy="445" r="5" fill="#e63946" class="lamp-switch" id="lamp-switch-btn" />
+                        <circle cx="200" cy="444" r="6" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5" class="lamp-switch" id="lamp-switch-btn" />
                         
                         <!-- Lower Arm / Springs -->
-                        <line x1="200" y1="435" x2="160" y2="300" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
-                        <circle cx="200" cy="435" r="7" fill="#212529" />
+                        <line x1="200" y1="434" x2="160" y2="300" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
+                        <circle cx="200" cy="434" r="8" fill="#475569" stroke="#94a3b8" stroke-width="2" />
                         
                         <!-- Middle joint -->
-                        <circle cx="160" cy="300" r="7" fill="#212529" />
+                        <circle cx="160" cy="300" r="8" fill="#475569" stroke="#94a3b8" stroke-width="2" />
                         
                         <!-- Upper Arm -->
                         <line x1="160" y1="300" x2="220" y2="150" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
                         
                         <!-- Top Joint/Pivot -->
-                        <circle cx="220" cy="150" r="8" fill="url(#lamp-accent)" />
+                        <circle cx="220" cy="150" r="8" fill="url(#lamp-accent)" stroke="#e2e8f0" stroke-width="1.5" />
                         
                         <!-- Lamp Shade Connector -->
-                        <path d="M 215,145 L 200,160 L 195,155 L 210,140 Z" fill="url(#lamp-metal)" />
+                        <path d="M 215,145 L 200,160 L 195,155 L 210,140 Z" fill="url(#lamp-metal)" stroke="#475569" stroke-width="1" />
                         
                         <!-- Lamp Shade Head -->
-                        <path d="M 170,165 C 170,140 230,140 230,165 Z" fill="url(#lamp-metal)" stroke="#1a1d20" stroke-width="2" />
+                        <path d="M 170,165 C 170,138 230,138 230,165 Z" fill="url(#lamp-metal-bright)" stroke="#475569" stroke-width="2" />
                         <!-- Lamp Rim -->
-                        <ellipse cx="200" cy="165" rx="30" ry="8" fill="#343a40" stroke="#1a1d20" stroke-width="1.5" />
+                        <ellipse cx="200" cy="165" rx="30" ry="8" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5" />
                         
                         <!-- Light Bulb -->
-                        <circle cx="200" cy="167" r="10" fill="#dee2e6" class="lamp-bulb" id="lamp-bulb" />
-                        <circle cx="200" cy="167" r="22" fill="url(#bulb-glow)" class="lamp-bulb-glow" id="lamp-bulb-glow" />
+                        <circle cx="200" cy="167" r="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" class="lamp-bulb" id="lamp-bulb" />
+                        <circle cx="200" cy="167" r="24" fill="url(#bulb-glow)" class="lamp-bulb-glow" id="lamp-bulb-glow" />
                         
                         <!-- Switch Cord (Pull chain) hanging down -->
-                        <line x1="225" y1="160" x2="225" y2="220" stroke="#8d99ae" stroke-width="1.5" class="pull-chain" id="pull-chain-line" />
-                        <circle cx="225" cy="223" r="4" fill="url(#lamp-accent)" class="pull-chain-knob" id="pull-chain-knob" />
+                        <line x1="225" y1="160" x2="225" y2="220" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="2,2" class="pull-chain" id="pull-chain-line" />
+                        <circle cx="225" cy="223" r="5" fill="url(#lamp-accent)" stroke="#fff" stroke-width="1.5" class="pull-chain-knob" id="pull-chain-knob" />
                     </svg>
-                    <div class="lamp-hint">Click the lamp switch or chain to toggle light!</div>
+                    <div class="lamp-hint"><i class="fas fa-hand-pointer"></i> Click lamp switch or chain to toggle light!</div>
                 </div>
             </div>
         </div>
@@ -238,89 +257,141 @@
             <div class="skills-grid">
                 <!-- Skill 1 -->
                 <div class="skill-card fade-in" data-category="languages">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fab fa-python skill-icon-python"></i> Python</span>
-                        <span class="skill-percentage">75%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="75"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fab fa-python skill-icon-python"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="75%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-percentage">75%</span>
                     </div>
                 </div>
                 
                 <!-- Skill 2 -->
                 <div class="skill-card fade-in" data-category="languages">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fas fa-database skill-icon-db"></i> Databases (MySQL, PostgreSQL, SQLite)</span>
-                        <span class="skill-percentage">70%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="70"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fas fa-database skill-icon-db"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="70%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Databases</span>
+                        <span class="skill-level">MySQL · PostgreSQL · SQLite</span>
+                        <span class="skill-percentage">70%</span>
                     </div>
                 </div>
 
                 <!-- Skill 3 -->
                 <div class="skill-card fade-in" data-category="automation">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fab fa-html5 skill-icon-html"></i> HTML5 & CSS3</span>
-                        <span class="skill-percentage">68%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="68"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fab fa-html5 skill-icon-html"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="68%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">HTML5 & CSS3</span>
+                        <span class="skill-percentage">68%</span>
                     </div>
                 </div>
 
                 <!-- Skill 4 -->
                 <div class="skill-card fade-in" data-category="automation">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fab fa-js skill-icon-js"></i> JavaScript & React (Frameworks)</span>
-                        <span class="skill-percentage">60%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="60"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fab fa-js skill-icon-js"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="60%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">JavaScript & React</span>
+                        <span class="skill-percentage">60%</span>
                     </div>
                 </div>
 
                 <!-- Skill 5 -->
                 <div class="skill-card fade-in" data-category="ml-data">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fas fa-brain skill-icon-ml"></i> Machine Learning & Scikit-learn</span>
-                        <span class="skill-percentage">72%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="72"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fas fa-brain skill-icon-ml"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="72%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Machine Learning</span>
+                        <span class="skill-level">Scikit-learn · TensorFlow</span>
+                        <span class="skill-percentage">72%</span>
                     </div>
                 </div>
 
                 <!-- Skill 6 -->
                 <div class="skill-card fade-in" data-category="ml-data">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fas fa-chart-line skill-icon-data"></i> Data Analysis (Pandas, NumPy, Matplotlib, Seaborn)</span>
-                        <span class="skill-percentage">74%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="74"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fas fa-chart-line skill-icon-data"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="74%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Data Analysis</span>
+                        <span class="skill-level">Pandas · NumPy · Matplotlib</span>
+                        <span class="skill-percentage">74%</span>
                     </div>
                 </div>
 
                 <!-- Skill 7 -->
                 <div class="skill-card fade-in" data-category="automation">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fas fa-robot skill-icon-bot"></i> Web Automation (Playwright, APScheduler)</span>
-                        <span class="skill-percentage">71%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="71"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fas fa-robot skill-icon-bot"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="71%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Web Automation</span>
+                        <span class="skill-level">Playwright · APScheduler</span>
+                        <span class="skill-percentage">71%</span>
                     </div>
                 </div>
 
                 <!-- Skill 8 -->
                 <div class="skill-card fade-in" data-category="automation">
-                    <div class="skill-info">
-                        <span class="skill-name"><i class="fas fa-server skill-icon-srv"></i> Streamlit & Flask (basic)</span>
-                        <span class="skill-percentage">65%</span>
+                    <div class="skill-ring-container">
+                        <svg class="skill-ring" viewBox="0 0 120 120">
+                            <circle class="skill-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="skill-ring-fill" cx="60" cy="60" r="52" data-percent="65"/>
+                        </svg>
+                        <div class="skill-ring-icon">
+                            <i class="fas fa-server skill-icon-srv"></i>
+                        </div>
                     </div>
-                    <div class="skill-bar-bg">
-                        <div class="skill-bar-fill" data-width="65%"></div>
+                    <div class="skill-details">
+                        <span class="skill-name">Streamlit & Flask</span>
+                        <span class="skill-percentage">65%</span>
                     </div>
                 </div>
             </div>
@@ -329,15 +400,15 @@
             <div class="tech-cloud fade-in">
                 <h4>Other tools & concepts:</h4>
                 <div class="badge-container">
-                    <span class="tech-badge">LLM APIs (Groq, Gemini)</span>
-                    <span class="tech-badge">Git & GitHub</span>
-                    <span class="tech-badge">VS Code</span>
-                    <span class="tech-badge">Jupyter Notebooks</span>
-                    <span class="tech-badge">APScheduler</span>
-                    <span class="tech-badge">REST APIs</span>
-                    <span class="tech-badge">ETL Processes</span>
-                    <span class="tech-badge">Bootstrap</span>
-                    <span class="tech-badge">Data Visualization (Matplotlib, Seaborn)</span>
+                    <span class="tech-badge"><i class="fas fa-microchip"></i> LLM APIs (Groq, Gemini)</span>
+                    <span class="tech-badge"><i class="fab fa-git-alt"></i> Git & GitHub</span>
+                    <span class="tech-badge"><i class="fas fa-code"></i> VS Code</span>
+                    <span class="tech-badge"><i class="fas fa-book-open"></i> Jupyter Notebooks</span>
+                    <span class="tech-badge"><i class="fas fa-clock"></i> APScheduler</span>
+                    <span class="tech-badge"><i class="fas fa-plug"></i> REST APIs</span>
+                    <span class="tech-badge"><i class="fas fa-exchange-alt"></i> ETL Processes</span>
+                    <span class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap</span>
+                    <span class="tech-badge"><i class="fas fa-chart-bar"></i> Data Visualization</span>
                 </div>
             </div>
         </div>

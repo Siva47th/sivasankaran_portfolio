@@ -1,5 +1,6 @@
 /* ==========================================
    script.js — Interactive Logic & GSAP Animations
+   Enhanced with Particle System, Skill Rings, & Animations
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroAnimations();
     initDeskLamp();
     initAboutAnimations();
-    initSkillBars();
+    initSkillRings();
     initTimelineScroll();
     initProjectCards();
     initIDCard();
     initContactForm();
+    initParticles();
+    initSectionAnimations();
 });
 
 /* ==========================================
@@ -128,37 +131,45 @@ function initCursorGlow() {
    3. Hero Section Load Animations
    ========================================== */
 function initHeroAnimations() {
-    // Initial fade in for content before lamp turns on
-    const tl = gsap.timeline();
+    if (typeof gsap === 'undefined') return;
+
+    // Initial fade in for content with explicit target states
+    const tl = gsap.timeline({
+        onComplete: () => {
+            gsap.set(['.hero-badge', '.hero-name', '.hero-title', '.hero-actions', '.lamp-container'], {
+                clearProps: "opacity,transform"
+            });
+        }
+    });
     
-    tl.from('.hero-badge', {
-        opacity: 0,
-        y: -20,
-        duration: 1,
-        ease: "power3.out"
-    })
-    .from('.hero-name', {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        ease: "power3.out"
-    }, "-=0.7")
-    .from('.hero-title', {
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        ease: "power3.out"
-    }, "-=0.7")
-    .to('.hero-actions', {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power3.out"
-    }, "-=0.7");
+    tl.fromTo('.hero-badge', 
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }
+    )
+    .fromTo('.hero-name', 
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
+        "-=0.4"
+    )
+    .fromTo('.hero-title', 
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
+        "-=0.4"
+    )
+    .fromTo('.hero-actions', 
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
+        "-=0.4"
+    )
+    .fromTo('.lamp-container', 
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 
+        "-=0.5"
+    );
 }
 
 /* ==========================================
-   4. Interactive Desk Lamp
+   4. Interactive Desk Lamp — ENHANCED
    ========================================== */
 function initDeskLamp() {
     const lampContainer = document.getElementById('lamp-container');
@@ -196,10 +207,13 @@ function initDeskLamp() {
             // Subtle bulb flicker effect on turn on
             gsap.fromTo('#lamp-bulb-glow, #light-beam', 
                 { opacity: 0 },
-                { opacity: 1, duration: 0.2, repeat: 2, yoyo: true, onComplete: () => {
+                { opacity: 1, duration: 0.15, repeat: 3, yoyo: true, onComplete: () => {
                     gsap.set('#lamp-bulb-glow, #light-beam', { clearProps: "opacity" });
                 }}
             );
+            
+            // Emit light particles effect
+            emitLampParticles();
         } else {
             document.body.classList.remove('lamp-on');
             localStorage.setItem('lampState', 'off');
@@ -213,15 +227,62 @@ function initDeskLamp() {
         if (playChainAnimation) {
             const chainTl = gsap.timeline();
             chainTl.to([pullChainLine, pullChainKnob], {
-                y: 12,
-                duration: 0.15,
+                y: 15,
+                duration: 0.12,
                 ease: "power1.in"
+            })
+            .to([pullChainLine, pullChainKnob], {
+                y: -3,
+                duration: 0.15,
+                ease: "power2.out"
             })
             .to([pullChainLine, pullChainKnob], {
                 y: 0,
                 duration: 0.4,
                 ease: "elastic.out(1, 0.3)"
             });
+        }
+    }
+    
+    // Small sparkle particles when lamp turns on
+    function emitLampParticles() {
+        const container = lampContainer;
+        if (!container) return;
+        
+        for (let i = 0; i < 8; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.style.cssText = `
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: #fbbf24;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 100;
+                box-shadow: 0 0 8px #fbbf24;
+            `;
+            container.appendChild(sparkle);
+            
+            const angle = (Math.PI * 2 / 8) * i;
+            const dist = 60 + Math.random() * 40;
+            
+            gsap.fromTo(sparkle, 
+                { 
+                    x: container.offsetWidth / 2, 
+                    y: container.offsetHeight * 0.35,
+                    opacity: 1,
+                    scale: 1
+                },
+                {
+                    x: container.offsetWidth / 2 + Math.cos(angle) * dist,
+                    y: container.offsetHeight * 0.35 + Math.sin(angle) * dist,
+                    opacity: 0,
+                    scale: 0,
+                    duration: 0.6 + Math.random() * 0.4,
+                    ease: "power2.out",
+                    onComplete: () => sparkle.remove()
+                }
+            );
         }
     }
 
@@ -297,27 +358,37 @@ function initAboutAnimations() {
 }
 
 /* ==========================================
-   6. Skills Progress Bars Animation
+   6. Skills Ring Animation (Circular Progress)
    ========================================== */
-function initSkillBars() {
+function initSkillRings() {
     const skillCards = document.querySelectorAll('.skill-card');
-    const skillBarFills = document.querySelectorAll('.skill-bar-fill');
+    const skillRingFills = document.querySelectorAll('.skill-ring-fill');
     const tabBtns = document.querySelectorAll('.tab-btn');
+    const circumference = 2 * Math.PI * 52; // 326.73
 
-    // Trigger loading on scroll
-    skillBarFills.forEach(bar => {
-        const targetWidth = bar.getAttribute('data-width');
+    // Animate rings on scroll into view
+    skillRingFills.forEach(ring => {
+        const percent = parseInt(ring.getAttribute('data-percent')) || 0;
+        const offset = circumference - (circumference * percent / 100);
+        
+        // Set initial state
+        ring.style.strokeDasharray = circumference;
+        ring.style.strokeDashoffset = circumference;
         
         ScrollTrigger.create({
-            trigger: bar,
-            start: "top 95%",
+            trigger: ring.closest('.skill-card'),
+            start: "top 90%",
             onEnter: () => {
-                bar.style.width = targetWidth;
+                gsap.to(ring, {
+                    strokeDashoffset: offset,
+                    duration: 1.5,
+                    ease: "power2.out"
+                });
             }
         });
     });
 
-    // Staggered card fade-in on scroll (using gsap.to because initial opacity is 0 in CSS)
+    // Staggered card fade-in on scroll
     gsap.to('.skill-card', {
         scrollTrigger: {
             trigger: '.skills-grid',
@@ -326,8 +397,8 @@ function initSkillBars() {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out"
+        stagger: 0.08,
+        ease: "back.out(1.7)"
     });
 
     // Skills Category Filter Tabs
@@ -343,10 +414,18 @@ function initSkillBars() {
                 const cardCategory = card.getAttribute('data-category');
                 
                 if (category === 'all' || cardCategory === category) {
-                    card.style.display = 'block';
-                    gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4 });
+                    card.style.display = 'flex';
+                    gsap.fromTo(card, 
+                        { opacity: 0, scale: 0.9, y: 15 }, 
+                        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }
+                    );
                 } else {
-                    card.style.display = 'none';
+                    gsap.to(card, {
+                        opacity: 0,
+                        scale: 0.9,
+                        duration: 0.3,
+                        onComplete: () => { card.style.display = 'none'; }
+                    });
                 }
             });
         });
@@ -631,6 +710,7 @@ function initIDCard() {
    ========================================== */
 async function loadEnv() {
     try {
+        if (window.location.protocol === 'file:') return null;
         const response = await fetch('./.env');
         if (!response.ok) return null;
         const text = await response.text();
@@ -766,6 +846,206 @@ async function initContactForm() {
         opacity: 1,
         x: 0,
         duration: 0.85,
+        ease: "power2.out"
+    });
+}
+
+/* ==========================================
+   11. Floating Particle System
+   ========================================== */
+function initParticles() {
+    const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animId;
+    
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    resize();
+    window.addEventListener('resize', resize);
+    
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.4 + 0.1;
+            this.pulseSpeed = Math.random() * 0.02 + 0.005;
+            this.pulseOffset = Math.random() * Math.PI * 2;
+            // Color palette: indigo, violet, cool blue
+            const colors = [
+                [129, 140, 248],  // indigo
+                [167, 139, 250],  // violet
+                [96, 165, 250],   // blue
+                [244, 114, 182],  // pink
+            ];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        update(time) {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            // Wrap around edges
+            if (this.x < 0) this.x = canvas.width;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.y < 0) this.y = canvas.height;
+            if (this.y > canvas.height) this.y = 0;
+            
+            // Pulsing opacity
+            this.currentOpacity = this.opacity * (0.6 + 0.4 * Math.sin(time * this.pulseSpeed + this.pulseOffset));
+        }
+        
+        draw() {
+            const [r, g, b] = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.currentOpacity})`;
+            ctx.fill();
+            
+            // Subtle glow effect
+            if (this.size > 1.2) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.currentOpacity * 0.1})`;
+                ctx.fill();
+            }
+        }
+    }
+    
+    // Create particles (fewer on mobile for performance)
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 30 : 60;
+    
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+    }
+    
+    let startTime = Date.now();
+    
+    function animate() {
+        const time = Date.now() - startTime;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Only draw when lamp is on for visual integration
+        const isLampOn = document.body.classList.contains('lamp-on');
+        const targetOpacity = isLampOn ? 0.6 : 0.15;
+        canvas.style.opacity = targetOpacity;
+        
+        particles.forEach(p => {
+            p.update(time);
+            p.draw();
+        });
+        
+        // Draw connecting lines between nearby particles
+        if (!isMobile) {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 120) {
+                        const lineOpacity = (1 - dist / 120) * 0.08;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(129, 140, 248, ${lineOpacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        animId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+}
+
+/* ==========================================
+   12. Additional Section Animations
+   ========================================== */
+function initSectionAnimations() {
+    // Tech cloud badges staggered reveal
+    gsap.to('.tech-cloud', {
+        scrollTrigger: {
+            trigger: '.tech-cloud',
+            start: "top 85%",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+    
+    // Stagger tech badges
+    gsap.from('.tech-badge', {
+        scrollTrigger: {
+            trigger: '.badge-container',
+            start: "top 85%",
+        },
+        opacity: 0,
+        y: 10,
+        scale: 0.9,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: "back.out(1.7)"
+    });
+    
+    // Highlight numbers count-up animation
+    document.querySelectorAll('.highlight-number').forEach(el => {
+        const text = el.textContent;
+        const numMatch = text.match(/[\d.]+/);
+        if (!numMatch) return;
+        
+        const targetNum = parseFloat(numMatch[0]);
+        const suffix = text.replace(numMatch[0], '');
+        const isFloat = text.includes('.');
+        
+        ScrollTrigger.create({
+            trigger: el,
+            start: "top 85%",
+            onEnter: () => {
+                gsap.fromTo(el, 
+                    { innerText: 0 },
+                    {
+                        innerText: targetNum,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        snap: { innerText: isFloat ? 0.1 : 1 },
+                        onUpdate: function() {
+                            const current = parseFloat(gsap.getProperty(el, "innerText"));
+                            el.textContent = (isFloat ? current.toFixed(1) : Math.round(current)) + suffix;
+                        }
+                    }
+                );
+            },
+            once: true
+        });
+    });
+    
+    // Footer fade in
+    gsap.from('.footer-bottom', {
+        scrollTrigger: {
+            trigger: '.footer',
+            start: "top 95%",
+        },
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
         ease: "power2.out"
     });
 }

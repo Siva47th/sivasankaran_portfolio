@@ -1063,6 +1063,7 @@ a {
     border-radius: 16px;
     padding: 32px;
     text-align: center;
+    opacity: 1;
 }
 
 .tech-cloud h4 {
@@ -1090,6 +1091,7 @@ a {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    opacity: 1;
 }
 
 .tech-badge i {

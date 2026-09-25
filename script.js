@@ -639,16 +639,20 @@ function initIDCard() {
     if (!cardContainer || !idCard) return;
 
     // Scroll entry effect
-    gsap.from('.idcard-viewport', {
-        scrollTrigger: {
-            trigger: '.idcard-viewport',
-            start: "top 80%",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power3.out"
-    });
+    gsap.fromTo('.idcard-viewport', 
+        { opacity: 0, y: 35 },
+        {
+            scrollTrigger: {
+                trigger: '.idcard-viewport',
+                start: "top 80%",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            clearProps: "opacity,transform"
+        }
+    );
 
     // Flip card when clicked (All devices)
     cardContainer.addEventListener('click', (e) => {
@@ -981,30 +985,29 @@ function initParticles() {
    12. Additional Section Animations
    ========================================== */
 function initSectionAnimations() {
-    // Tech cloud badges staggered reveal
-    gsap.to('.tech-cloud', {
-        scrollTrigger: {
-            trigger: '.tech-cloud',
-            start: "top 85%",
+    // Tech cloud and badges staggered reveal
+    ScrollTrigger.create({
+        trigger: '.tech-cloud',
+        start: "top 85%",
+        onEnter: () => {
+            gsap.fromTo('.tech-cloud', 
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", clearProps: "opacity,transform" }
+            );
+            gsap.fromTo('.tech-badge', 
+                { opacity: 0, y: 15, scale: 0.9 },
+                { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1, 
+                    duration: 0.4, 
+                    stagger: 0.04, 
+                    ease: "back.out(1.5)",
+                    clearProps: "opacity,transform"
+                }
+            );
         },
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    });
-    
-    // Stagger tech badges
-    gsap.from('.tech-badge', {
-        scrollTrigger: {
-            trigger: '.badge-container',
-            start: "top 85%",
-        },
-        opacity: 0,
-        y: 10,
-        scale: 0.9,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "back.out(1.7)"
+        once: true
     });
     
     // Highlight numbers count-up animation
@@ -1040,14 +1043,18 @@ function initSectionAnimations() {
     });
     
     // Footer fade in
-    gsap.from('.footer-bottom', {
-        scrollTrigger: {
-            trigger: '.footer',
-            start: "top 95%",
-        },
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: "power2.out"
-    });
+    gsap.fromTo('.footer-bottom', 
+        { opacity: 0, y: 20 },
+        {
+            scrollTrigger: {
+                trigger: '.footer',
+                start: "top 95%",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "opacity,transform"
+        }
+    );
 }

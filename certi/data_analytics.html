@@ -76,6 +76,76 @@
             transform: translateX(-4px);
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
         }
+
+        /* Certificate Action Buttons */
+        .cert-actions-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .cert-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .cert-action-btn.btn-primary {
+            background: #4f46e5 !important;
+            color: #ffffff !important;
+            border: 1px solid #4f46e5 !important;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28) !important;
+        }
+
+        .cert-action-btn.btn-primary:hover {
+            background: #4338ca !important;
+            border-color: #4338ca !important;
+            color: #ffffff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.42) !important;
+        }
+
+        .cert-action-btn.btn-secondary,
+        .cert-actions-wrapper .btn-secondary {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border: 1.5px solid #cbd5e1 !important;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
+        }
+
+        .cert-action-btn.btn-secondary i,
+        .cert-actions-wrapper .btn-secondary i {
+            color: #4f46e5 !important;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .cert-action-btn.btn-secondary:hover,
+        .cert-actions-wrapper .btn-secondary:hover {
+            background: #f8fafc !important;
+            border-color: #6366f1 !important;
+            color: #4f46e5 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(99, 102, 241, 0.18) !important;
+        }
+
+        .cert-action-btn.btn-secondary:hover i,
+        .cert-actions-wrapper .btn-secondary:hover i {
+            color: #4338ca !important;
+            transform: scale(1.1);
+        }
         
         .project-header-card {
             position: relative;

@@ -588,16 +588,26 @@
         .cert-action-btn.btn-secondary {
             background: #ffffff !important;
             color: #0f172a !important;
-            border: 1px solid #cbd5e1 !important;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            border: 1.5px solid #cbd5e1 !important;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
             cursor: pointer;
         }
 
+        .cert-action-btn.btn-secondary i {
+            color: #047857 !important;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
         .cert-action-btn.btn-secondary:hover {
-            background: #f1f5f9 !important;
-            border-color: #94a3b8 !important;
+            background: #f8fafc !important;
+            border-color: #047857 !important;
             color: #047857 !important;
             transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(4, 120, 87, 0.18) !important;
+        }
+
+        .cert-action-btn.btn-secondary:hover i {
+            transform: scale(1.1);
         }
 
         /* Lightbox Fullscreen Modal */

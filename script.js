@@ -75,9 +75,9 @@ function initNavbar() {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             closeMobileMenu();
-            
+
             // Set active class
-            if(link.classList.contains('nav-link')) {
+            if (link.classList.contains('nav-link')) {
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
             }
@@ -88,7 +88,7 @@ function initNavbar() {
     document.querySelectorAll('section').forEach(section => {
         const id = section.getAttribute('id');
         if (!id) return;
-        
+
         ScrollTrigger.create({
             trigger: section,
             start: "top 30%",
@@ -116,7 +116,21 @@ function initCursorGlow() {
     const glow = document.getElementById('cursor-glow');
     if (!glow) return;
 
+    const furtherContents = document.getElementById('further-contents');
+
     window.addEventListener('mousemove', (e) => {
+        // Automatically switch glow to light mode when cursor is over the illuminated further-contents section
+        if (furtherContents && document.body.classList.contains('lamp-on')) {
+            const rect = furtherContents.getBoundingClientRect();
+            if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                glow.classList.add('in-light-section');
+            } else {
+                glow.classList.remove('in-light-section');
+            }
+        } else {
+            glow.classList.remove('in-light-section');
+        }
+
         // Use GSAP for smooth tracking
         gsap.to(glow, {
             x: e.clientX,
@@ -141,31 +155,31 @@ function initHeroAnimations() {
             });
         }
     });
-    
-    tl.fromTo('.hero-badge', 
+
+    tl.fromTo('.hero-badge',
         { opacity: 0, y: -20 },
         { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }
     )
-    .fromTo('.hero-name', 
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
-        "-=0.4"
-    )
-    .fromTo('.hero-title', 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
-        "-=0.4"
-    )
-    .fromTo('.hero-actions', 
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 
-        "-=0.4"
-    )
-    .fromTo('.lamp-container', 
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 
-        "-=0.5"
-    );
+        .fromTo('.hero-name',
+            { opacity: 0, y: 25 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+            "-=0.4"
+        )
+        .fromTo('.hero-title',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+            "-=0.4"
+        )
+        .fromTo('.hero-actions',
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+            "-=0.4"
+        )
+        .fromTo('.lamp-container',
+            { opacity: 0, scale: 0.95 },
+            { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" },
+            "-=0.5"
+        );
 }
 
 /* ==========================================
@@ -177,86 +191,199 @@ function initDeskLamp() {
     const pullChainLine = document.getElementById('pull-chain-line');
     const pullChainKnob = document.getElementById('pull-chain-knob');
     const heroDescription = document.getElementById('hero-description');
-    
-    // Default to OFF (Sleep Mode) unless explicitly turned ON by the user in this session
+    const furtherContents = document.getElementById('further-contents');
+    const lampUnlockWrapper = document.getElementById('lamp-unlock-wrapper');
+    const lampUnlockBtn = document.getElementById('lamp-unlock-btn');
+    const lampUnlockHeroCta = document.getElementById('lamp-unlock-hero-cta');
+    const heroUnlockBtn = document.getElementById('hero-unlock-btn');
+    const lampHint = document.getElementById('lamp-hint');
+    const scrollIndicatorBtn = document.getElementById('scroll-indicator-btn');
+    const scrollIndicatorLabel = document.getElementById('scroll-indicator-label');
+
+    // Default to OFF initially so visitor experiences the home page first
     const savedState = sessionStorage.getItem('lampState');
     let lampIsOn = savedState === 'on';
 
-    // Ensure stale localStorage state is reset if no session choice was made
-    if (!savedState) {
-        localStorage.setItem('lampState', 'off');
+    function updateLampUI(isOn, animate = true) {
+        if (isOn) {
+            document.body.classList.add('lamp-on');
+            if (heroDescription) gsap.set(heroDescription, { filter: "brightness(1.15)" });
+
+            if (furtherContents) {
+                furtherContents.classList.remove('locked');
+                furtherContents.classList.add('unlocked');
+            }
+
+            if (lampUnlockWrapper) {
+                lampUnlockWrapper.style.display = 'flex';
+                if (animate) {
+                    gsap.fromTo(lampUnlockWrapper,
+                        { opacity: 0, y: 15, scale: 0.9 },
+                        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }
+                    );
+                } else {
+                    lampUnlockWrapper.style.opacity = '1';
+                }
+            }
+
+            if (lampUnlockHeroCta) {
+                lampUnlockHeroCta.style.display = 'flex';
+                if (animate) {
+                    gsap.fromTo(lampUnlockHeroCta,
+                        { opacity: 0, y: 15, scale: 0.95 },
+                        { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.1, ease: "back.out(1.7)" }
+                    );
+                } else {
+                    lampUnlockHeroCta.style.opacity = '1';
+                }
+            }
+
+            if (lampHint) {
+                lampHint.innerHTML = '<i class="fas fa-check-circle text-amber-400"></i> Portfolio illuminated! Click button to explore ↓';
+            }
+
+            if (scrollIndicatorLabel) {
+                scrollIndicatorLabel.textContent = 'Explore Portfolio ↓';
+            }
+
+            // Refresh ScrollTrigger so all section triggers calculate positions with unlocked content
+            setTimeout(() => {
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }, 100);
+
+        } else {
+            document.body.classList.remove('lamp-on');
+            document.body.classList.remove('scrolled-in-light');
+            if (heroDescription) gsap.set(heroDescription, { filter: "brightness(0.75)" });
+
+            if (furtherContents) {
+                furtherContents.classList.add('locked');
+                furtherContents.classList.remove('unlocked');
+            }
+
+            if (lampUnlockWrapper) {
+                if (animate) {
+                    gsap.to(lampUnlockWrapper, {
+                        opacity: 0,
+                        y: 10,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            lampUnlockWrapper.style.display = 'none';
+                        }
+                    });
+                } else {
+                    lampUnlockWrapper.style.display = 'none';
+                    lampUnlockWrapper.style.opacity = '0';
+                }
+            }
+
+            if (lampUnlockHeroCta) {
+                if (animate) {
+                    gsap.to(lampUnlockHeroCta, {
+                        opacity: 0,
+                        y: 10,
+                        duration: 0.3,
+                        ease: "power2.in",
+                        onComplete: () => {
+                            lampUnlockHeroCta.style.display = 'none';
+                        }
+                    });
+                } else {
+                    lampUnlockHeroCta.style.display = 'none';
+                    lampUnlockHeroCta.style.opacity = '0';
+                }
+            }
+
+            if (lampHint) {
+                lampHint.innerHTML = '<i class="fas fa-hand-pointer"></i> Click switch or chain to illuminate portfolio';
+            }
+
+            if (scrollIndicatorLabel) {
+                scrollIndicatorLabel.textContent = 'Switch on Lamp to Explore';
+            }
+        }
     }
 
-    // Synchronize initial document body state immediately to avoid screen flash
-    if (lampIsOn) {
-        document.body.classList.add('lamp-on');
-        gsap.set(heroDescription, { filter: "brightness(1.2)" });
-    } else {
-        document.body.classList.remove('lamp-on');
-        gsap.set(heroDescription, { filter: "brightness(0.6)" });
-    }
+    // Initialize state
+    updateLampUI(lampIsOn, false);
 
     // Toggle Light Function
     function toggleLamp(playChainAnimation = false) {
         lampIsOn = !lampIsOn;
-        
+        sessionStorage.setItem('lampState', lampIsOn ? 'on' : 'off');
+        localStorage.setItem('lampState', lampIsOn ? 'on' : 'off');
+        updateLampUI(lampIsOn, true);
+
         if (lampIsOn) {
-            document.body.classList.add('lamp-on');
-            sessionStorage.setItem('lampState', 'on');
-            localStorage.setItem('lampState', 'on');
-            
             // Trigger text reveal animation
-            gsap.fromTo(heroDescription, 
-                { opacity: 0.2, filter: "brightness(0.6)" }, 
-                { opacity: 1, filter: "brightness(1.2)", duration: 0.8, ease: "power2.out" }
-            );
+            if (heroDescription) {
+                gsap.fromTo(heroDescription,
+                    { opacity: 0.2, filter: "brightness(0.6)" },
+                    { opacity: 1, filter: "brightness(1.15)", duration: 0.8, ease: "power2.out" }
+                );
+            }
 
             // Subtle bulb flicker effect on turn on
-            gsap.fromTo('#lamp-bulb-glow, #light-beam', 
+            gsap.fromTo('#lamp-bulb-glow, #light-beam',
                 { opacity: 0 },
-                { opacity: 1, duration: 0.15, repeat: 3, yoyo: true, onComplete: () => {
-                    gsap.set('#lamp-bulb-glow, #light-beam', { clearProps: "opacity" });
-                }}
+                {
+                    opacity: 1, duration: 0.15, repeat: 3, yoyo: true, onComplete: () => {
+                        gsap.set('#lamp-bulb-glow, #light-beam', { clearProps: "opacity" });
+                    }
+                }
             );
-            
+
             // Emit light particles effect
             emitLampParticles();
         } else {
-            document.body.classList.remove('lamp-on');
-            sessionStorage.setItem('lampState', 'off');
-            localStorage.setItem('lampState', 'off');
-            gsap.to(heroDescription, {
-                filter: "brightness(0.6)",
-                duration: 0.5
-            });
+            // If user turned off lamp while scrolled down, smoothly scroll to top
+            if (window.scrollY > 300) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         // Chain pull visual click effect
-        if (playChainAnimation) {
+        if (playChainAnimation && pullChainLine && pullChainKnob) {
             const chainTl = gsap.timeline();
             chainTl.to([pullChainLine, pullChainKnob], {
                 y: 15,
                 duration: 0.12,
                 ease: "power1.in"
             })
-            .to([pullChainLine, pullChainKnob], {
-                y: -3,
-                duration: 0.15,
-                ease: "power2.out"
-            })
-            .to([pullChainLine, pullChainKnob], {
-                y: 0,
-                duration: 0.4,
-                ease: "elastic.out(1, 0.3)"
-            });
+                .to([pullChainLine, pullChainKnob], {
+                    y: -3,
+                    duration: 0.15,
+                    ease: "power2.out"
+                })
+                .to([pullChainLine, pullChainKnob], {
+                    y: 0,
+                    duration: 0.4,
+                    ease: "elastic.out(1, 0.3)"
+                });
         }
     }
-    
+
+    // Helper to turn on lamp if not already on and scroll to section
+    function ensureLampOnAndScroll(targetId) {
+        if (!lampIsOn) {
+            toggleLamp(true);
+        }
+        setTimeout(() => {
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 150);
+    }
+
     // Small sparkle particles when lamp turns on
     function emitLampParticles() {
         const container = lampContainer;
         if (!container) return;
-        
+
         for (let i = 0; i < 8; i++) {
             const sparkle = document.createElement('div');
             sparkle.style.cssText = `
@@ -270,13 +397,13 @@ function initDeskLamp() {
                 box-shadow: 0 0 8px #fbbf24;
             `;
             container.appendChild(sparkle);
-            
+
             const angle = (Math.PI * 2 / 8) * i;
             const dist = 60 + Math.random() * 40;
-            
-            gsap.fromTo(sparkle, 
-                { 
-                    x: container.offsetWidth / 2, 
+
+            gsap.fromTo(sparkle,
+                {
+                    x: container.offsetWidth / 2,
                     y: container.offsetHeight * 0.35,
                     opacity: 1,
                     scale: 1
@@ -310,11 +437,88 @@ function initDeskLamp() {
     }
 
     if (lampContainer) {
-        lampContainer.addEventListener('click', () => {
+        lampContainer.addEventListener('click', (e) => {
+            // Don't toggle if clicking the unlock button itself
+            if (e.target.closest('#lamp-unlock-wrapper')) return;
             toggleLamp(true);
         });
     }
 
+    // Route button clicks (both under lamp and in hero content)
+    if (lampUnlockBtn) {
+        lampUnlockBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const aboutSec = document.getElementById('about');
+            if (aboutSec) {
+                aboutSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    if (heroUnlockBtn) {
+        heroUnlockBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const aboutSec = document.getElementById('about');
+            if (aboutSec) {
+                aboutSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // Scroll indicator click
+    if (scrollIndicatorBtn) {
+        scrollIndicatorBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!lampIsOn) {
+                toggleLamp(true);
+            }
+            setTimeout(() => {
+                const aboutSec = document.getElementById('about');
+                if (aboutSec) {
+                    aboutSec.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 150);
+        });
+    }
+
+    // Nav links auto-unlock
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href !== '#' && href !== '#projects-modal') {
+            link.addEventListener('click', (e) => {
+                const targetId = href.substring(1);
+                if (['about', 'skills', 'timeline', 'projects', 'idcard-section', 'contact'].includes(targetId)) {
+                    if (!lampIsOn) {
+                        e.preventDefault();
+                        ensureLampOnAndScroll(targetId);
+                    }
+                }
+            });
+        }
+    });
+
+    // Navbar & cursor glow luxury light theme sync on scroll
+    window.addEventListener('scroll', () => {
+        if (document.body.classList.contains('lamp-on')) {
+            const furtherContents = document.getElementById('further-contents');
+            if (furtherContents && furtherContents.classList.contains('unlocked')) {
+                const rect = furtherContents.getBoundingClientRect();
+                if (rect.top <= window.innerHeight * 0.75) {
+                    document.body.classList.add('scrolled-in-light');
+                } else {
+                    document.body.classList.remove('scrolled-in-light');
+                }
+            } else if (window.scrollY > window.innerHeight * 0.65) {
+                document.body.classList.add('scrolled-in-light');
+            } else {
+                document.body.classList.remove('scrolled-in-light');
+            }
+        } else {
+            document.body.classList.remove('scrolled-in-light');
+        }
+    });
 }
 
 /* ==========================================
@@ -372,11 +576,11 @@ function initSkillRings() {
     skillRingFills.forEach(ring => {
         const percent = parseInt(ring.getAttribute('data-percent')) || 0;
         const offset = circumference - (circumference * percent / 100);
-        
+
         // Set initial state
         ring.style.strokeDasharray = circumference;
         ring.style.strokeDashoffset = circumference;
-        
+
         ScrollTrigger.create({
             trigger: ring.closest('.skill-card'),
             start: "top 90%",
@@ -411,14 +615,14 @@ function initSkillRings() {
             btn.classList.add('active');
 
             const category = btn.getAttribute('data-category');
-            
+
             skillCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
-                
+
                 if (category === 'all' || cardCategory === category) {
                     card.style.display = 'flex';
-                    gsap.fromTo(card, 
-                        { opacity: 0, scale: 0.9, y: 15 }, 
+                    gsap.fromTo(card,
+                        { opacity: 0, scale: 0.9, y: 15 },
                         { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }
                     );
                 } else {
@@ -438,70 +642,40 @@ function initSkillRings() {
    7. Timeline Scroll Animations
    ========================================== */
 function initTimelineScroll() {
-    const leftItems = document.querySelectorAll('.timeline-item.left-item');
-    const rightItems = document.querySelectorAll('.timeline-item.right-item');
     const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
-    leftItems.forEach(item => {
-        // Animate the timeline-item itself since it has fade-in class
+    document.querySelectorAll('.timeline-item').forEach(item => {
+        const card = item.querySelector('.timeline-content');
+        if (!card) return;
+        const trigger = {
+            trigger: item,
+            start: "top 86%",
+            once: true
+        };
+
+        // Timeline rows carry the shared .fade-in state, so reveal the row too.
         gsap.to(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-            },
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            ease: "power2.out"
-        });
-        
-        // On mobile, animate vertically (y: 30) instead of horizontally (x: -50) to prevent overflow-x scrollbars
-        const startState = isMobile ? { y: 30, x: 0, opacity: 0.5 } : { x: -50, y: 0, opacity: 0.5 };
-        const endState = isMobile ? { y: 0, x: 0, opacity: 1 } : { x: 0, y: 0, opacity: 1 };
-        
-        // Stagger or slide the interior content
-        gsap.fromTo(item.querySelector('.timeline-content'), 
-            startState,
-            {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%",
-                },
-                ...endState,
-                duration: 0.85,
-                ease: "power2.out"
-            }
-        );
-    });
-
-    rightItems.forEach(item => {
-        // Animate the timeline-item itself since it has fade-in class
-        gsap.to(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: "top 85%",
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power2.out"
+            duration: 0.65,
+            ease: "power2.out",
+            scrollTrigger: trigger
         });
 
-        // On mobile, animate vertically (y: 30) instead of horizontally (x: 50) to prevent overflow-x scrollbars
-        const startState = isMobile ? { y: 30, x: 0, opacity: 0.5 } : { x: 50, y: 0, opacity: 0.5 };
-        const endState = isMobile ? { y: 0, x: 0, opacity: 1 } : { x: 0, y: 0, opacity: 1 };
-
-        // Stagger or slide the interior content
-        gsap.fromTo(item.querySelector('.timeline-content'), 
-            startState,
+        // Reveal every card as it enters view. Cards alternate from the outer edge
+        // on desktop and rise gently on mobile to avoid horizontal overflow.
+        gsap.fromTo(card,
+            isMobile
+                ? { x: 0, y: 28, opacity: 0, scale: 0.97 }
+                : { x: item.classList.contains('left-item') ? -56 : 56, y: 12, opacity: 0, scale: 0.97 },
             {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%",
-                },
-                ...endState,
-                duration: 0.85,
-                ease: "power2.out"
+                x: 0,
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.25)",
+                scrollTrigger: trigger
             }
         );
     });
@@ -533,16 +707,16 @@ function initProjectCards() {
     if (supportsHover) {
         cards.forEach(card => {
             const inner = card.querySelector('.project-card-inner');
-            
+
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 // Calculate mouse coordinates relative to card center (normalized between -1 and 1)
                 const x = (e.clientX - rect.left) / rect.width - 0.5;
                 const y = (e.clientY - rect.top) / rect.height - 0.5;
-                
+
                 // Maximum tilt angle (in degrees)
                 const maxTilt = 10;
-                
+
                 // Rotate card on X and Y based on cursor position
                 gsap.to(inner, {
                     rotateY: x * maxTilt,
@@ -576,17 +750,17 @@ function initProjectCards() {
             if (targetModal && modalOverlay) {
                 // Prevent background scrolling
                 document.body.style.overflow = 'hidden';
-                
+
                 modalOverlay.classList.add('active');
                 targetModal.classList.add('active');
-                
+
                 // Animate elements inside the modal
-                gsap.fromTo(targetModal.querySelector('.modal-header'), 
+                gsap.fromTo(targetModal.querySelector('.modal-header'),
                     { opacity: 0, y: -20 },
                     { opacity: 1, y: 0, duration: 0.4, delay: 0.2 }
                 );
-                
-                gsap.fromTo(targetModal.querySelectorAll('.modal-body > *'), 
+
+                gsap.fromTo(targetModal.querySelectorAll('.modal-body > *'),
                     { opacity: 0, y: 20 },
                     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.3 }
                 );
@@ -600,7 +774,7 @@ function initProjectCards() {
         if (activeModal && modalOverlay) {
             modalOverlay.classList.remove('active');
             activeModal.classList.remove('active');
-            
+
             // Re-enable body scroll
             document.body.style.overflow = 'auto';
         }
@@ -635,11 +809,11 @@ function initProjectCards() {
 function initIDCard() {
     const cardContainer = document.getElementById('id-card-container');
     const idCard = document.getElementById('id-card');
-    
+
     if (!cardContainer || !idCard) return;
 
     // Scroll entry effect
-    gsap.fromTo('.idcard-viewport', 
+    gsap.fromTo('.idcard-viewport',
         { opacity: 0, y: 35 },
         {
             scrollTrigger: {
@@ -654,15 +828,70 @@ function initIDCard() {
         }
     );
 
+    // Photo Zoom Lightbox handling
+    const photoTrigger = document.getElementById('id-card-photo-trigger') || cardContainer.querySelector('.id-card-photo-area');
+    const photoModal = document.getElementById('id-photo-modal');
+    const photoClose = document.getElementById('id-photo-modal-close');
+    const photoBackdrop = document.getElementById('id-photo-backdrop');
+
+    function openPhotoModal() {
+        if (!photoModal) return;
+        photoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        gsap.fromTo('.id-photo-modal-content',
+            { scale: 0.8, opacity: 0, y: 20 },
+            { scale: 1, opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.5)" }
+        );
+    }
+
+    function closePhotoModal() {
+        if (!photoModal) return;
+        gsap.to('.id-photo-modal-content', {
+            scale: 0.85,
+            opacity: 0,
+            y: 15,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+                photoModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    if (photoTrigger) {
+        photoTrigger.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent card from flipping
+            openPhotoModal();
+        });
+    }
+
+    if (photoClose) {
+        photoClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closePhotoModal();
+        });
+    }
+
+    if (photoBackdrop) {
+        photoBackdrop.addEventListener('click', closePhotoModal);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && photoModal && photoModal.classList.contains('active')) {
+            closePhotoModal();
+        }
+    });
+
     // Flip card when clicked (All devices)
     cardContainer.addEventListener('click', (e) => {
-        // Prevent click events inside download links/social links from reflipping the card
-        if (e.target.closest('a')) {
+        // Prevent click events inside download links, social links, or photo area from flipping the card
+        if (e.target.closest('a') || e.target.closest('.id-card-photo-area')) {
             return;
         }
-        
+
         idCard.classList.toggle('flipped');
-        
+
         // Animation feedback
         gsap.to(cardContainer, {
             scale: 1.05,
@@ -686,7 +915,7 @@ function initIDCard() {
             // Calculate coordinate offsets relative to center
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
+
             // Tilt the whole container based on mouse movement (representing pendulum motion)
             gsap.to(cardContainer, {
                 rotate: x * 6,
@@ -730,7 +959,7 @@ async function loadEnv() {
                 const key = parts[0].trim();
                 let value = parts.slice(1).join('=').trim();
                 // Strip optional quotes
-                if ((value.startsWith('"') && value.endsWith('"')) || 
+                if ((value.startsWith('"') && value.endsWith('"')) ||
                     (value.startsWith("'") && value.endsWith("'"))) {
                     value = value.substring(1, value.length - 1);
                 }
@@ -755,7 +984,7 @@ async function initContactForm() {
 
     // Load credentials from .env file asynchronously
     const env = await loadEnv() || {};
-    const EMAILJS_PUBLIC_KEY = env.EMAILJS_PUBLIC_KEY || "HP9YXLtWt5CKcVuA1"; 
+    const EMAILJS_PUBLIC_KEY = env.EMAILJS_PUBLIC_KEY || "HP9YXLtWt5CKcVuA1";
     const EMAILJS_SERVICE_ID = env.EMAILJS_SERVICE_ID || "service_b4zp8aw";
     const EMAILJS_TEMPLATE_ID = env.EMAILJS_TEMPLATE_ID || "template_2askcu9";
 
@@ -787,7 +1016,7 @@ async function initContactForm() {
             // Show Toast Notification
             if (toast) {
                 toast.classList.add('active');
-                
+
                 // Hide Toast after 4 seconds
                 setTimeout(() => {
                     toast.classList.remove('active');
@@ -808,10 +1037,10 @@ async function initContactForm() {
         }
 
         // 2. Check configuration and submit to EmailJS
-        const isEmailJSConfigured = 
-            typeof emailjs !== 'undefined' && 
-            EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY" && 
-            EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID" && 
+        const isEmailJSConfigured =
+            typeof emailjs !== 'undefined' &&
+            EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY" &&
+            EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID" &&
             EMAILJS_TEMPLATE_ID !== "YOUR_TEMPLATE_ID";
 
         if (isEmailJSConfigured) {
@@ -862,24 +1091,24 @@ async function initContactForm() {
 function initParticles() {
     const canvas = document.getElementById('particles-canvas');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     let particles = [];
     let animId;
-    
+
     function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     }
-    
+
     resize();
     window.addEventListener('resize', resize);
-    
+
     class Particle {
         constructor() {
             this.reset();
         }
-        
+
         reset() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
@@ -898,28 +1127,28 @@ function initParticles() {
             ];
             this.color = colors[Math.floor(Math.random() * colors.length)];
         }
-        
+
         update(time) {
             this.x += this.speedX;
             this.y += this.speedY;
-            
+
             // Wrap around edges
             if (this.x < 0) this.x = canvas.width;
             if (this.x > canvas.width) this.x = 0;
             if (this.y < 0) this.y = canvas.height;
             if (this.y > canvas.height) this.y = 0;
-            
+
             // Pulsing opacity
             this.currentOpacity = this.opacity * (0.6 + 0.4 * Math.sin(time * this.pulseSpeed + this.pulseOffset));
         }
-        
+
         draw() {
             const [r, g, b] = this.color;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.currentOpacity})`;
             ctx.fill();
-            
+
             // Subtle glow effect
             if (this.size > 1.2) {
                 ctx.beginPath();
@@ -929,31 +1158,31 @@ function initParticles() {
             }
         }
     }
-    
+
     // Create particles (fewer on mobile for performance)
     const isMobile = window.innerWidth < 768;
     const particleCount = isMobile ? 30 : 60;
-    
+
     for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
     }
-    
+
     let startTime = Date.now();
-    
+
     function animate() {
         const time = Date.now() - startTime;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
+
         // Only draw when lamp is on for visual integration
         const isLampOn = document.body.classList.contains('lamp-on');
         const targetOpacity = isLampOn ? 0.6 : 0.15;
         canvas.style.opacity = targetOpacity;
-        
+
         particles.forEach(p => {
             p.update(time);
             p.draw();
         });
-        
+
         // Draw connecting lines between nearby particles
         if (!isMobile) {
             for (let i = 0; i < particles.length; i++) {
@@ -961,7 +1190,7 @@ function initParticles() {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    
+
                     if (dist < 120) {
                         const lineOpacity = (1 - dist / 120) * 0.08;
                         ctx.beginPath();
@@ -974,10 +1203,10 @@ function initParticles() {
                 }
             }
         }
-        
+
         animId = requestAnimationFrame(animate);
     }
-    
+
     animate();
 }
 
@@ -990,18 +1219,18 @@ function initSectionAnimations() {
         trigger: '.tech-cloud',
         start: "top 85%",
         onEnter: () => {
-            gsap.fromTo('.tech-cloud', 
+            gsap.fromTo('.tech-cloud',
                 { opacity: 0, y: 20 },
                 { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", clearProps: "opacity,transform" }
             );
-            gsap.fromTo('.tech-badge', 
+            gsap.fromTo('.tech-badge',
                 { opacity: 0, y: 15, scale: 0.9 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1, 
-                    duration: 0.4, 
-                    stagger: 0.04, 
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.4,
+                    stagger: 0.04,
                     ease: "back.out(1.5)",
                     clearProps: "opacity,transform"
                 }
@@ -1009,29 +1238,29 @@ function initSectionAnimations() {
         },
         once: true
     });
-    
+
     // Highlight numbers count-up animation
     document.querySelectorAll('.highlight-number').forEach(el => {
         const text = el.textContent;
         const numMatch = text.match(/[\d.]+/);
         if (!numMatch) return;
-        
+
         const targetNum = parseFloat(numMatch[0]);
         const suffix = text.replace(numMatch[0], '');
         const isFloat = text.includes('.');
-        
+
         ScrollTrigger.create({
             trigger: el,
             start: "top 85%",
             onEnter: () => {
-                gsap.fromTo(el, 
+                gsap.fromTo(el,
                     { innerText: 0 },
                     {
                         innerText: targetNum,
                         duration: 1.5,
                         ease: "power2.out",
                         snap: { innerText: isFloat ? 0.1 : 1 },
-                        onUpdate: function() {
+                        onUpdate: function () {
                             const current = parseFloat(gsap.getProperty(el, "innerText"));
                             el.textContent = (isFloat ? current.toFixed(1) : Math.round(current)) + suffix;
                         }
@@ -1041,9 +1270,9 @@ function initSectionAnimations() {
             once: true
         });
     });
-    
+
     // Footer fade in
-    gsap.fromTo('.footer-bottom', 
+    gsap.fromTo('.footer-bottom',
         { opacity: 0, y: 20 },
         {
             scrollTrigger: {

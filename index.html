@@ -18,9 +18,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=zoom1">
     
-    <!-- Tailwind CSS CDN removed: site uses custom CSS system -->
+    <!-- Tailwind CSS v3 CDN & Custom Extended Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        cyber: {
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            amber: '#f59e0b',
+                            emerald: '#10b981',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            },
+            corePlugins: {
+                preflight: false, // Preserves custom CSS resets & existing component alignments
+            }
+        }
+    </script>
     
     <!-- Chatbot Widget CSS -->
     <link rel="stylesheet" href="chatbot.css">
@@ -33,24 +72,37 @@
     <!-- Floating Particles Background -->
     <canvas id="particles-canvas" class="particles-canvas"></canvas>
     
-    <!-- Aurora Gradient Background -->
+    <!-- Aurora Ambient Background -->
     <div class="aurora-bg">
         <div class="aurora-blob aurora-1"></div>
         <div class="aurora-blob aurora-2"></div>
         <div class="aurora-blob aurora-3"></div>
     </div>
 
+
+
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">SIVASANKARAN<span>.E</span></a>
-            <div class="nav-links">
+        <div class="nav-container flex items-center justify-between">
+            <a href="#" class="logo group flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] transition-all"></span>
+                <span>SIVASANKARAN<span class="text-cyan-400">.E</span></span>
+            </a>
+            <div class="nav-links hidden md:flex items-center gap-7">
                 <a href="#about" class="nav-link">About</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#timeline" class="nav-link">Timeline</a>
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#idcard-section" class="nav-link">ID Card</a>
                 <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="hidden lg:flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Open to Roles
+                </span>
+                <a href="certi/Sivasankaran_E_Resume.pdf" download="Sivasankaran_E_Resume.pdf" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500 hover:text-white transition-all shadow-sm">
+                    <i class="fas fa-file-arrow-down"></i> Resume
+                </a>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
                 <span></span>
@@ -77,20 +129,70 @@
     <section class="hero-section" id="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-badge">B.Tech Student & Developer</div>
-                <h1 class="hero-name">Sivasankaran E</h1>
-                <h2 class="hero-title">Artificial Intelligence & Data Science</h2>
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 backdrop-blur-md shadow-sm mb-4">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span>AI & Data Science Student · IFET (CGPA 8.3)</span>
+                </div>
+
+                <h1 class="hero-name text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-2 text-white">
+                    Sivasankaran E
+                </h1>
+
+                <div class="flex items-center gap-3 flex-wrap mb-4">
+                    <h2 class="hero-title text-xl sm:text-2xl font-bold text-indigo-400 m-0">
+                        AI & Data Science Engineer
+                    </h2>
+                    <span class="text-xs px-2.5 py-0.5 rounded-md bg-purple-500/15 text-purple-300 border border-purple-500/30 font-medium">B.Tech 2023–2027</span>
+                </div>
+
+                <!-- Specialization Pills -->
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-200 border border-slate-700/60 backdrop-blur-sm hover:border-purple-400 hover:text-purple-300 transition-all"><i class="fas fa-brain text-purple-400"></i> Machine Learning</span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-200 border border-slate-700/60 backdrop-blur-sm hover:border-cyan-400 hover:text-cyan-300 transition-all"><i class="fas fa-robot text-cyan-400"></i> Playwright Automation</span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-200 border border-slate-700/60 backdrop-blur-sm hover:border-blue-400 hover:text-blue-300 transition-all"><i class="fas fa-database text-blue-400"></i> Data Pipelines & SQL</span>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-200 border border-slate-700/60 backdrop-blur-sm hover:border-emerald-400 hover:text-emerald-300 transition-all"><i class="fab fa-python text-emerald-400"></i> Full Stack Python</span>
+                </div>
                 
-                <!-- This description will be revealed/lit up when the lamp is on -->
-                <div class="hero-description-container">
-                    <p class="hero-description" id="hero-description">
+                <!-- Description Card -->
+                <div class="hero-description-container p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md shadow-lg shadow-black/20 mb-6">
+                    <p class="hero-description text-slate-300 text-base sm:text-lg leading-relaxed m-0" id="hero-description">
                         Building intelligent automation pipelines, end-to-end Machine Learning systems, and clean interactive dashboards. Eager to turn complex data problems into automated, production-ready solutions.
                     </p>
                 </div>
                 
-                <div class="hero-actions" id="hero-actions">
-                    <a href="#projects" class="btn btn-primary">Explore Projects</a>
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                <!-- Hero Action Buttons -->
+                <div class="hero-actions flex flex-wrap items-center gap-3.5 mb-5" id="hero-actions">
+                    <a href="#projects" class="btn btn-primary px-6 py-3 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-105 active:scale-95 transition-all">
+                        <i class="fas fa-rocket mr-2"></i> Explore Projects
+                    </a>
+                    <a href="#contact" class="btn btn-secondary px-6 py-3 rounded-xl font-semibold text-slate-200 border border-slate-700 bg-slate-800/60 backdrop-blur-md hover:border-indigo-400 hover:bg-slate-800 hover:scale-105 transition-all">
+                        <i class="fas fa-paper-plane mr-2"></i> Get in Touch
+                    </a>
+                    <a href="certi/Sivasankaran_E_Resume.pdf" download="Sivasankaran_E_Resume.pdf" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl font-semibold text-xs text-indigo-300 border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 hover:border-indigo-400 transition-all">
+                        <i class="fas fa-download"></i> Resume PDF
+                    </a>
+                </div>
+
+                <!-- Luxury Illuminated Route CTA (Reveals upon lamp switch-on) -->
+                <div class="lamp-unlock-wrapper-hero mb-6" id="lamp-unlock-hero-cta" style="display: none; opacity: 0;">
+                    <a href="#about" class="lamp-unlock-btn" id="hero-unlock-btn">
+                        <span class="lamp-btn-icon"><i class="fas fa-arrow-down"></i></span>
+                        <span class="lamp-btn-text">Explore Full Portfolio</span>
+                        <span class="lamp-btn-badge">Lighted Studio ↓</span>
+                    </a>
+                </div>
+
+                <!-- Fast Social Connection Badges -->
+                <div class="flex items-center gap-3">
+                    <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Connect:</span>
+                    <a href="https://github.com/Siva47th" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-800 transition-all" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/sivasankaran-e-0ba199292/" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-sky-400 hover:border-sky-500/50 hover:bg-slate-800 transition-all" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:sivasankaranelu2006@gmail.com" class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-pink-400 hover:border-pink-500/50 hover:bg-slate-800 transition-all" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:+919360641905" class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-900/80 border border-slate-800 text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-slate-800 transition-all" aria-label="Phone"><i class="fas fa-phone-alt"></i></a>
                 </div>
             </div>
             
@@ -98,92 +200,81 @@
                 <!-- Clickable SVG Desk Lamp -->
                 <div class="lamp-container" id="lamp-container">
                     <svg viewBox="0 0 400 500" class="desk-lamp" id="desk-lamp" width="100%" height="100%">
-                        <!-- Definitions for gradients and shadows -->
-                        <defs>
-                            <!-- Sleek Brushed Aluminum / Chrome Metal -->
-                            <linearGradient id="lamp-metal" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#cbd5e1" />
-                                <stop offset="40%" stop-color="#94a3b8" />
-                                <stop offset="70%" stop-color="#64748b" />
-                                <stop offset="100%" stop-color="#475569" />
-                            </linearGradient>
-                            <linearGradient id="lamp-metal-bright" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#f8fafc" />
-                                <stop offset="50%" stop-color="#cbd5e1" />
-                                <stop offset="100%" stop-color="#94a3b8" />
-                            </linearGradient>
-                            <linearGradient id="lamp-accent" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#00f2fe" />
-                                <stop offset="100%" stop-color="#4facfe" />
-                            </linearGradient>
-                            <radialGradient id="bulb-glow" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" stop-color="#ffd200" stop-opacity="1" />
-                                <stop offset="40%" stop-color="#ffb703" stop-opacity="0.8" />
-                                <stop offset="100%" stop-color="#ffd200" stop-opacity="0" />
-                            </radialGradient>
-                            <linearGradient id="light-beam-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#ffd200" stop-opacity="0.35" />
-                                <stop offset="40%" stop-color="#ffb703" stop-opacity="0.12" />
-                                <stop offset="100%" stop-color="#ffd200" stop-opacity="0.0" />
-                            </linearGradient>
-                        </defs>
+
                         
                         <!-- Table / Base surface line -->
                         <line x1="20" y1="460" x2="380" y2="460" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
                         
                         <!-- Light Beam (Polygon) representing the cone of light -->
-                        <polygon points="200,165 30,460 370,460" fill="url(#light-beam-gradient)" class="light-beam" id="light-beam" />
+                        <polygon points="200,165 30,460 370,460" fill="rgba(251, 191, 36, 0.18)" class="light-beam" id="light-beam" />
                         
                         <!-- Lamp Base -->
-                        <path d="M 150,450 C 150,438 250,438 250,450 Z" fill="url(#lamp-metal-bright)" stroke="#475569" stroke-width="2" />
+                        <path d="M 150,450 C 150,438 250,438 250,450 Z" fill="#94a3b8" stroke="#475569" stroke-width="2" />
                         <rect x="185" y="434" width="30" height="11" rx="3" fill="#64748b" stroke="#94a3b8" stroke-width="1" />
                         
                         <!-- Red Switch Button on Base -->
                         <circle cx="200" cy="444" r="6" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5" class="lamp-switch" id="lamp-switch-btn" />
                         
                         <!-- Lower Arm / Springs -->
-                        <line x1="200" y1="434" x2="160" y2="300" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
+                        <line x1="200" y1="434" x2="160" y2="300" stroke="#64748b" stroke-width="8" stroke-linecap="round" />
                         <circle cx="200" cy="434" r="8" fill="#475569" stroke="#94a3b8" stroke-width="2" />
                         
                         <!-- Middle joint -->
                         <circle cx="160" cy="300" r="8" fill="#475569" stroke="#94a3b8" stroke-width="2" />
                         
                         <!-- Upper Arm -->
-                        <line x1="160" y1="300" x2="220" y2="150" stroke="url(#lamp-metal)" stroke-width="8" stroke-linecap="round" />
+                        <line x1="160" y1="300" x2="220" y2="150" stroke="#64748b" stroke-width="8" stroke-linecap="round" />
                         
                         <!-- Top Joint/Pivot -->
-                        <circle cx="220" cy="150" r="8" fill="url(#lamp-accent)" stroke="#e2e8f0" stroke-width="1.5" />
+                        <circle cx="220" cy="150" r="8" fill="#38bdf8" stroke="#e2e8f0" stroke-width="1.5" />
                         
                         <!-- Lamp Shade Connector -->
-                        <path d="M 215,145 L 200,160 L 195,155 L 210,140 Z" fill="url(#lamp-metal)" stroke="#475569" stroke-width="1" />
+                        <path d="M 215,145 L 200,160 L 195,155 L 210,140 Z" fill="#64748b" stroke="#475569" stroke-width="1" />
                         
                         <!-- Lamp Shade Head -->
-                        <path d="M 170,165 C 170,138 230,138 230,165 Z" fill="url(#lamp-metal-bright)" stroke="#475569" stroke-width="2" />
+                        <path d="M 170,165 C 170,138 230,138 230,165 Z" fill="#94a3b8" stroke="#475569" stroke-width="2" />
                         <!-- Lamp Rim -->
                         <ellipse cx="200" cy="165" rx="30" ry="8" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1.5" />
                         
                         <!-- Light Bulb -->
                         <circle cx="200" cy="167" r="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" class="lamp-bulb" id="lamp-bulb" />
-                        <circle cx="200" cy="167" r="24" fill="url(#bulb-glow)" class="lamp-bulb-glow" id="lamp-bulb-glow" />
+                        <circle cx="200" cy="167" r="24" fill="#fbbf24" fill-opacity="0.35" class="lamp-bulb-glow" id="lamp-bulb-glow" />
                         
                         <!-- Switch Cord (Pull chain) hanging down -->
                         <line x1="225" y1="160" x2="225" y2="220" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="2,2" class="pull-chain" id="pull-chain-line" />
-                        <circle cx="225" cy="223" r="5" fill="url(#lamp-accent)" stroke="#fff" stroke-width="1.5" class="pull-chain-knob" id="pull-chain-knob" />
+                        <circle cx="225" cy="223" r="5" fill="#38bdf8" stroke="#fff" stroke-width="1.5" class="pull-chain-knob" id="pull-chain-knob" />
                     </svg>
-                    <div class="lamp-hint"><i class="fas fa-hand-pointer"></i> Click lamp switch or chain to toggle light!</div>
+                    <div class="lamp-hint" id="lamp-hint"><i class="fas fa-hand-pointer"></i> Click switch or chain to illuminate portfolio</div>
+                    
+                    <!-- Luxury Illuminated Routing Button (Appears when lamp is switched ON) -->
+                    <div class="lamp-unlock-wrapper" id="lamp-unlock-wrapper" style="display: none; opacity: 0;">
+                        <a href="#about" class="lamp-unlock-btn" id="lamp-unlock-btn">
+                            <span class="lamp-btn-icon"><i class="fas fa-arrow-down"></i></span>
+                            <span class="lamp-btn-text">Explore Illuminated Portfolio</span>
+                            <span class="lamp-btn-badge">Lighted Mode</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" id="scroll-indicator-btn" style="cursor: pointer;">
             <span class="mouse">
                 <span class="wheel"></span>
             </span>
-            <span class="label">Scroll Down</span>
+            <span class="label" id="scroll-indicator-label">Switch on Lamp to Explore</span>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about-section" id="about">
+    <!-- Further Contents (Unlocked in Luxury Lighted Aesthetic when lamp is switched ON) -->
+    <main id="further-contents" class="further-contents locked">
+        <div class="luxury-portal-divider">
+            <div class="portal-badge-container">
+                <span class="portal-badge"><i class="fas fa-lightbulb"></i> Illuminated Portfolio</span>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
         <div class="section-container">
             <h2 class="section-title text-reveal">About Me</h2>
             <div class="about-grid">
@@ -222,18 +313,27 @@
                     <p>
                         Whether building LLM-integrated automation pipelines or architecting time-series energy dashboards, I focus on performance, normalization, and modular structure.
                     </p>
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <span class="highlight-number">3+</span>
-                            <span class="highlight-label">Self-driven Projects</span>
+                    <div class="about-highlights grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-8">
+                        <div class="highlight-item p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-indigo-500/40 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                            <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm mb-2">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <span class="highlight-number text-2xl lg:text-3xl font-extrabold text-indigo-400">3+</span>
+                            <span class="highlight-label text-xs uppercase tracking-wider text-slate-400 mt-1">Self-driven Projects</span>
                         </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">8.3</span>
-                            <span class="highlight-label">B.Tech CGPA</span>
+                        <div class="highlight-item p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-cyan-500/40 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                            <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm mb-2">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <span class="highlight-number text-2xl lg:text-3xl font-extrabold text-cyan-400">8.3</span>
+                            <span class="highlight-label text-xs uppercase tracking-wider text-slate-400 mt-1">B.Tech CGPA (IFET)</span>
                         </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">6</span>
-                            <span class="highlight-label">Industry Certifications</span>
+                        <div class="highlight-item p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md hover:border-pink-500/40 hover:-translate-y-1 transition-all duration-300 shadow-md">
+                            <div class="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-sm mb-2">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <span class="highlight-number text-2xl lg:text-3xl font-extrabold text-pink-400">6</span>
+                            <span class="highlight-label text-xs uppercase tracking-wider text-slate-400 mt-1">Industry Certifications</span>
                         </div>
                     </div>
                 </div>
@@ -537,10 +637,10 @@
                 <div class="timeline-item left-item fade-in">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2023 - 2027</div>
-                        <h3 class="timeline-title">B.Tech in AI & Data Science</h3>
-                        <h4 class="timeline-subtitle">IFET College of Engineering, Villupuram</h4>
-                        <p>Pursuing undergraduate studies with an 8.3 CGPA. Coursework includes Machine Learning, Data Structures & Algorithms, DBMS, Big Data Analytics, and AI Ethics.</p>
+                        <div class="timeline-date">2022 - 2023</div>
+                        <h3 class="timeline-title">Higher Secondary (Class XII)</h3>
+                        <h4 class="timeline-subtitle">St. John's Higher Secondary School</h4>
+                        <p>Specialized in Computer Science. Graduated with an overall percentage of 89%.</p>
                     </div>
                 </div>
 
@@ -548,10 +648,10 @@
                 <div class="timeline-item right-item fade-in">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">2022 - 2023</div>
-                        <h3 class="timeline-title">Higher Secondary (Class XII)</h3>
-                        <h4 class="timeline-subtitle">St. John's Higher Secondary School</h4>
-                        <p>Specialized in Computer Science. Graduated with an overall percentage of 89%.</p>
+                        <div class="timeline-date">2023 - 2027</div>
+                        <h3 class="timeline-title">B.Tech in AI & Data Science</h3>
+                        <h4 class="timeline-subtitle">IFET College of Engineering, Villupuram</h4>
+                        <p>Pursuing undergraduate studies with an 8.3 CGPA. Coursework includes Machine Learning, Data Structures & Algorithms, DBMS, Big Data Analytics, and AI Ethics.</p>
                     </div>
                 </div>
             </div>
@@ -566,65 +666,192 @@
             
             <div class="projects-grid">
                 <!-- Project 1 -->
-                <div class="project-card fade-in" data-modal="modal-automation">
+                <div class="project-card fade-in" data-modal="modal-automation" data-theme="amber">
                     <div class="project-card-inner">
-                        <div class="project-image-placeholder orange-grad">
-                            <i class="fas fa-robot project-icon"></i>
-                            <div class="project-date">Jun - Jul 2026</div>
+                        <!-- Browser App Preview Frame -->
+                        <div class="project-preview-frame">
+                            <div class="preview-browser-bar">
+                                <div class="browser-dots">
+                                    <span class="dot dot-close"></span>
+                                    <span class="dot dot-minimize"></span>
+                                    <span class="dot dot-expand"></span>
+                                </div>
+                                <div class="browser-url-pill">
+                                    <i class="fas fa-lock"></i>
+                                    <span>automation.sys // playwright</span>
+                                </div>
+                                <span class="project-status-dot" title="Active Project">
+                                    <span class="status-pulse"></span>
+                                </span>
+                            </div>
+                            <div class="preview-image-wrap">
+                                <img src="auma/Screenshot 2026-07-04 213843.png" alt="Internship Automation System" class="preview-img" loading="lazy">
+                                <div class="preview-overlay">
+                                    <span class="preview-hover-cta">
+                                        <i class="fas fa-eye"></i> Quick Details
+                                    </span>
+                                </div>
+                                <div class="floating-badge-category">
+                                    <i class="fas fa-robot"></i>
+                                    <span>Automation & GenAI</span>
+                                </div>
+                                <div class="floating-badge-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>Jun - Jul 2026</span>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Card Content -->
                         <div class="project-info">
                             <h3 class="project-title">Internship Automation System</h3>
                             <p class="project-excerpt">End-to-end automation tool scraping listings from Internshala, LinkedIn, and Unstop using Playwright and LLM-generated custom cover letters.</p>
+                            
                             <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">Playwright</span>
-                                <span class="project-tag">SQLite</span>
-                                <span class="project-tag">Streamlit</span>
-                                <span class="project-tag">LLM APIs</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Python</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Playwright</span>
+                                <span class="project-tag"><i class="dev-dot"></i>SQLite</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Streamlit</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Groq / Gemini</span>
                             </div>
-                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+
+                            <div class="project-card-footer">
+                                <span class="project-link-btn">
+                                    <span>Read Case Study</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                                <a href="auma/index.html" class="project-showcase-btn" onclick="event.stopPropagation();">
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                    <span>Showcase</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="project-card fade-in" data-modal="modal-tracker">
+                <div class="project-card fade-in" data-modal="modal-tracker" data-theme="cyan">
                     <div class="project-card-inner">
-                        <div class="project-image-placeholder blue-grad">
-                            <i class="fas fa-tasks project-icon"></i>
-                            <div class="project-date">Aug - Nov 2025</div>
+                        <!-- Browser App Preview Frame -->
+                        <div class="project-preview-frame">
+                            <div class="preview-browser-bar">
+                                <div class="browser-dots">
+                                    <span class="dot dot-close"></span>
+                                    <span class="dot dot-minimize"></span>
+                                    <span class="dot dot-expand"></span>
+                                </div>
+                                <div class="browser-url-pill">
+                                    <i class="fas fa-lock"></i>
+                                    <span>study-velocity.io // mysql</span>
+                                </div>
+                                <span class="project-status-dot" title="Active Project">
+                                    <span class="status-pulse"></span>
+                                </span>
+                            </div>
+                            <div class="preview-image-wrap">
+                                <img src="learno/Screenshot 2026-06-24 093921.png" alt="Learning Progress Tracker" class="preview-img" loading="lazy">
+                                <div class="preview-overlay">
+                                    <span class="preview-hover-cta">
+                                        <i class="fas fa-eye"></i> Quick Details
+                                    </span>
+                                </div>
+                                <div class="floating-badge-category">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Data Engineering</span>
+                                </div>
+                                <div class="floating-badge-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>Aug - Nov 2025</span>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Card Content -->
                         <div class="project-info">
                             <h3 class="project-title">Learning Progress Tracker</h3>
-                            <p class="project-excerpt">A normalized MySQL/Streamlit web app enabling users to log courses, track goals, and analyze study velocity with plotly visualizations.</p>
+                            <p class="project-excerpt">A normalized MySQL/Streamlit web app enabling users to log courses, track goals, and analyze study velocity with Plotly visualizations.</p>
+                            
                             <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">MySQL</span>
-                                <span class="project-tag">Streamlit</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Python</span>
+                                <span class="project-tag"><i class="dev-dot"></i>MySQL</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Streamlit</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Plotly</span>
                             </div>
-                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+
+                            <div class="project-card-footer">
+                                <span class="project-link-btn">
+                                    <span>Read Case Study</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                                <a href="learno/index.html" class="project-showcase-btn" onclick="event.stopPropagation();">
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                    <span>Showcase</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="project-card fade-in" data-modal="modal-wattwise">
+                <div class="project-card fade-in" data-modal="modal-wattwise" data-theme="indigo">
                     <div class="project-card-inner">
-                        <div class="project-image-placeholder purple-grad">
-                            <i class="fas fa-bolt project-icon"></i>
-                            <div class="project-date">Feb - Mar 2024</div>
+                        <!-- Browser App Preview Frame -->
+                        <div class="project-preview-frame">
+                            <div class="preview-browser-bar">
+                                <div class="browser-dots">
+                                    <span class="dot dot-close"></span>
+                                    <span class="dot dot-minimize"></span>
+                                    <span class="dot dot-expand"></span>
+                                </div>
+                                <div class="browser-url-pill">
+                                    <i class="fas fa-lock"></i>
+                                    <span>wattwise-iot.ai // next15</span>
+                                </div>
+                                <span class="project-status-dot" title="Active Project">
+                                    <span class="status-pulse"></span>
+                                </span>
+                            </div>
+                            <div class="preview-image-wrap">
+                                <img src="energy_mgmt/Screenshot 2025-06-03 153908.png" alt="WattWise Energy Optimization" class="preview-img" loading="lazy">
+                                <div class="preview-overlay">
+                                    <span class="preview-hover-cta">
+                                        <i class="fas fa-eye"></i> Quick Details
+                                    </span>
+                                </div>
+                                <div class="floating-badge-category">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>GenAI & Energy IoT</span>
+                                </div>
+                                <div class="floating-badge-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>Feb - Mar 2024</span>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- Card Content -->
                         <div class="project-info">
                             <h3 class="project-title">WattWise: Smart Energy Optimization</h3>
                             <p class="project-excerpt">Full-stack AI-powered energy monitoring and optimization platform with predictive analytics, recommendations, and chatbots.</p>
+                            
                             <div class="project-tags">
-                                <span class="project-tag">Next.js</span>
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">TailwindCSS</span>
-                                <span class="project-tag">Google Genkit</span>
-                                <span class="project-tag">Gemini AI</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Next.js 15</span>
+                                <span class="project-tag"><i class="dev-dot"></i>React</span>
+                                <span class="project-tag"><i class="dev-dot"></i>TailwindCSS</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Google Genkit</span>
+                                <span class="project-tag"><i class="dev-dot"></i>Gemini 2.0</span>
                             </div>
-                            <span class="project-link-btn">Read Case Study <i class="fas fa-arrow-right"></i></span>
+
+                            <div class="project-card-footer">
+                                <span class="project-link-btn">
+                                    <span>Read Case Study</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                                <a href="energy_mgmt/index.html" class="project-showcase-btn" onclick="event.stopPropagation();">
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                    <span>Showcase</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -655,9 +882,12 @@
                                 <div class="id-card-dept">AI & DATA SCIENCE</div>
                             </div>
                             <div class="id-card-body">
-                                <div class="id-card-photo-area">
+                                <div class="id-card-photo-area" id="id-card-photo-trigger" title="Click to view & zoom photo" role="button" tabindex="0" aria-label="Zoom portrait photo">
                                     <div class="id-card-photo">
-                                        <img src="profile.jpeg" alt="Sivasankaran E" class="id-photo">
+                                        <img src="siva_id_photo.png?v=hd2" alt="Sivasankaran E" class="id-photo" loading="eager">
+                                        <div class="photo-zoom-badge">
+                                            <i class="fas fa-search-plus"></i>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="id-card-details">
@@ -715,7 +945,7 @@
                                 </ul>
                                 
                                 <div class="id-download-box">
-                                    <a href="certi/Sivasankaran_E_Resume_jul18.pdf" download class="btn btn-primary btn-sm btn-icon">
+                                    <a href="certi/Sivasankaran_E_Resume.pdf" download="Sivasankaran_E_Resume.pdf" class="btn btn-primary btn-sm btn-icon">
                                         <i class="fas fa-download"></i> Download Resume PDF
                                     </a>
                                 </div>
@@ -740,55 +970,64 @@
             
             <div class="contact-grid">
                 <div class="contact-info-panel fade-in">
-                    <h3>Contact Information</h3>
-                    <p class="contact-intro">Feel free to reach out to me via my direct channels or the contact form.</p>
+                    <h3 class="text-2xl font-bold text-white">Contact Information</h3>
+                    <p class="contact-intro text-slate-400 text-sm leading-relaxed mb-8">Feel free to reach out to me via my direct channels or submit the form for collaborations, opportunities, and discussions.</p>
                     
-                    <div class="contact-info-items">
-                        <div class="contact-info-item">
-                            <i class="fas fa-envelope contact-icon"></i>
+                    <div class="contact-info-items space-y-5 mb-8">
+                        <div class="contact-info-item flex items-center gap-4 p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 hover:border-cyan-500/40 transition-all">
+                            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg shrink-0 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+                                <i class="fas fa-envelope"></i>
+                            </div>
                             <div>
-                                <h4>Email</h4>
-                                <a href="mailto:sivasankaranelu2006@gmail.com">sivasankaranelu2006@gmail.com</a>
+                                <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 m-0">Email</h4>
+                                <a href="mailto:sivasankaranelu2006@gmail.com" class="text-sm sm:text-base font-semibold text-slate-200 hover:text-cyan-400 transition-colors">sivasankaranelu2006@gmail.com</a>
                             </div>
                         </div>
-                        <div class="contact-info-item">
-                            <i class="fas fa-phone-alt contact-icon"></i>
+                        <div class="contact-info-item flex items-center gap-4 p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 hover:border-emerald-500/40 transition-all">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
                             <div>
-                                <h4>Phone</h4>
-                                <a href="tel:+919360641905">+91-9360641905</a>
+                                <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 m-0">Phone</h4>
+                                <a href="tel:+919360641905" class="text-sm sm:text-base font-semibold text-slate-200 hover:text-emerald-400 transition-colors">+91-9360641905</a>
                             </div>
                         </div>
-                        <div class="contact-info-item">
-                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div class="contact-info-item flex items-center gap-4 p-3 rounded-xl bg-slate-900/40 border border-slate-800/80 hover:border-pink-500/40 transition-all">
+                            <div class="w-11 h-11 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center text-lg shrink-0 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
                             <div>
-                                <h4>Location</h4>
-                                <span>Villupuram, Tamil Nadu, India</span>
+                                <h4 class="text-xs uppercase font-bold tracking-wider text-slate-400 m-0">Location</h4>
+                                <span class="text-sm sm:text-base font-semibold text-slate-200">Villupuram, Tamil Nadu, India</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="contact-social-icons">
-                                        <a href="https://www.linkedin.com/in/sivasankaran-e-0ba199292/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="https://github.com/Siva47th" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                                    </div>
+                    <div class="contact-social-icons flex items-center gap-3">
+                        <a href="https://www.linkedin.com/in/sivasankaran-e-0ba199292/" target="_blank" rel="noopener noreferrer" class="social-icon w-10 h-10 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-sky-400 hover:border-sky-500/50 hover:bg-slate-800 transition-all" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/Siva47th" target="_blank" rel="noopener noreferrer" class="social-icon w-10 h-10 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-600 hover:bg-slate-800 transition-all" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
                 </div>
                 
                 <div class="contact-form-panel fade-in">
                     <form class="contact-form" id="contact-form">
                         <div class="form-group">
-                            <label for="form-name">Name</label>
-                            <input type="text" id="form-name" name="from_name" placeholder="John Doe" required>
+                            <label for="form-name" class="text-xs font-bold uppercase tracking-wider text-slate-400">Your Name</label>
+                            <input type="text" id="form-name" name="from_name" placeholder="John Doe" class="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all" required>
                         </div>
                         <div class="form-group">
-                            <label for="form-email">Email</label>
-                            <input type="email" id="form-email" name="from_email" placeholder="john@example.com" required>
+                            <label for="form-email" class="text-xs font-bold uppercase tracking-wider text-slate-400">Email Address</label>
+                            <input type="email" id="form-email" name="from_email" placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all" required>
                         </div>
                         <div class="form-group">
-                            <label for="form-message">Message</label>
-                            <textarea id="form-message" name="message" rows="5" placeholder="Let's build something awesome..." required></textarea>
+                            <label for="form-message" class="text-xs font-bold uppercase tracking-wider text-slate-400">Message</label>
+                            <textarea id="form-message" name="message" rows="5" placeholder="Let's discuss a project or opportunity..." class="w-full px-4 py-3 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-full" id="form-submit-btn">
-                            <span class="btn-text">Send Message</span>
+                        <button type="submit" class="btn btn-primary w-full py-3.5 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:scale-[1.01] active:scale-[0.99] transition-all" id="form-submit-btn">
+                            <span class="btn-text flex items-center justify-center gap-2">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane text-xs"></i>
+                            </span>
                             <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
                         </button>
                     </form>
@@ -798,14 +1037,44 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer border-t border-slate-800/80 bg-slate-950/90 py-10">
         <div class="footer-container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 Sivasankaran E. All rights reserved.</p>
-                <p>Designed with micro-interactions & GSAP.</p>
+            <div class="footer-bottom flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-200">SIVASANKARAN.E</span>
+                    <span class="text-slate-600">|</span>
+                    <span>&copy; 2026 All rights reserved.</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                    <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-indigo-300">Tailwind CSS v3</span>
+                    <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-purple-300">GSAP Animations</span>
+                    <span class="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-cyan-300">Vanilla JS</span>
+                </div>
             </div>
         </div>
     </footer>
+    </main>
+
+    <!-- ID Card Photo Lightbox Zoom Modal -->
+    <div class="id-photo-modal-overlay" id="id-photo-modal" aria-hidden="true">
+        <div class="id-photo-modal-backdrop" id="id-photo-backdrop"></div>
+        <div class="id-photo-modal-content" role="dialog" aria-modal="true" aria-label="Portrait Photo Zoom">
+            <button class="id-photo-modal-close" id="id-photo-modal-close" aria-label="Close photo zoom">&times;</button>
+            <div class="id-photo-frame">
+                <img src="siva_id_photo.png?v=hd2" alt="Sivasankaran E - Portrait" class="id-photo-zoomed">
+            </div>
+            <div class="id-photo-modal-footer">
+                <div class="id-photo-meta">
+                    <span class="id-photo-name">Sivasankaran E</span>
+                    <span class="id-photo-role">B.Tech · Artificial Intelligence & Data Science</span>
+                </div>
+                <a href="siva_id_photo.png" download="Sivasankaran_E_Portrait.png" class="id-photo-dl-btn" title="Download High-Resolution Photo">
+                    <i class="fas fa-download"></i>
+                    <span>HD Photo</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Project Modal Overlay & Modals -->
     <div class="modal-overlay" id="modal-overlay">
@@ -929,7 +1198,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
     <!-- Custom JS -->
-    <script src="script.js"></script>
+    <script src="script.js?v=zoom1"></script>
     
     <!-- Chatbot Widget JS -->
     <script src="chatbot.js"></script>

@@ -146,7 +146,7 @@
         },
         {
             keywords: ['resume', 'cv', 'download'],
-            response: () => `You can download Siva's latest resume here:\n\n📄 <a href="certi/Sivasankaran_E_Resume_jul18.pdf" download>Download Resume PDF →</a>`
+            response: () => `You can download Siva's latest resume here:\n\n📄 <a href="certi/Sivasankaran_E_Resume.pdf" download="Sivasankaran_E_Resume.pdf">Download Resume PDF →</a>`
         },
         {
             keywords: ['python'],

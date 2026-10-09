@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Development Internship - Certificate | Sivasankaran E</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,82 +14,503 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Parent CSS -->
-    <link rel="stylesheet" href="../style.css">
-    
-    <!-- Internship Certificate Showcase CSS -->
+    <link rel="stylesheet" href="../style.css?v=glow4">
+
+<!-- Showcase CSS (WattWise Luxury Editorial Theme) -->
     <style>
         .showcase-body {
-            padding-top: 120px;
+            padding-top: 50px;
+            padding-bottom: 80px;
             min-height: 100vh;
-            background-color: var(--bg-dark);
-            color: var(--color-text-primary);
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            position: relative;
+            font-family: 'Inter', sans-serif !important;
         }
+
+        .showcase-body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .section-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* cursor-glow active */
         
         .back-nav {
-            margin-bottom: 40px;
+            margin-bottom: 28px;
+        }
+
+        .back-nav .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 10px 22px;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .back-nav .btn-secondary:hover {
+            background: #f1f5f9 !important;
+            border-color: #94a3b8 !important;
+            color: #047857 !important;
+            transform: translateX(-4px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
         }
         
-        .cert-header-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .project-header-card {
+            position: relative;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 20px;
+            padding: 42px;
+            margin-bottom: 48px;
+            box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.05), 0 4px 8px -2px rgba(15, 23, 42, 0.02) !important;
+        }
+
+        .showcase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            background: #ecfdf5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        .badge-emerald {
+            background: #ecfdf5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        .badge-amber {
+            background: #fef3c7 !important;
+            color: #b45309 !important;
+            border: 1px solid #fde68a !important;
+        }
+
+        .badge-blue {
+            background: #e0f2fe !important;
+            color: #0369a1 !important;
+            border: 1px solid #bae6fd !important;
+        }
+
+        .badge-purple {
+            background: #ede9fe !important;
+            color: #6d28d9 !important;
+            border: 1px solid #ddd6fe !important;
+        }
+
+        .project-header-card h1,
+        .cert-header-card h1 {
+            font-size: 2.75rem !important;
+            line-height: 1.25 !important;
+            margin-bottom: 16px !important;
+            color: #0f172a !important;
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 700 !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+        }
+
+        .project-header-card p,
+        .cert-header-card p {
+            color: #475569 !important;
+            font-size: 1.125rem !important;
+            line-height: 1.7 !important;
+            max-width: 860px !important;
+            margin-bottom: 24px !important;
+            font-family: 'Inter', sans-serif !important;
         }
         
-        .cert-meta-info {
+        .project-meta-info {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            margin-top: 20px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
+            margin-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 24px;
         }
         
-        .cert-display-card {
-            background: rgba(20, 22, 35, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tech-tag {
+            background: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #334155 !important;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .tech-tag:hover {
+            background: #e2e8f0 !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        .showcase-meta-date {
+            position: static !important;
+            background: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #475569 !important;
+            padding: 6px 14px !important;
+            border-radius: 9999px !important;
+            font-size: 0.88rem !important;
+            font-weight: 500 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+
+        .gallery-title {
+            font-size: 2rem;
+            color: #0f172a;
+            margin-bottom: 28px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            background: #ffffff;
+            box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: #047857;
+            box-shadow: 0 14px 28px -4px rgba(4, 120, 87, 0.16);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.04);
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            backdrop-filter: blur(2px);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+        
+        .zoom-icon {
+            background: #047857;
+            color: #ffffff;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.35);
+            transform: scale(0.9);
+            transition: transform 0.25s ease;
+            margin-bottom: 8px;
+        }
+        
+        .gallery-item:hover .zoom-icon {
+            transform: scale(1);
+        }
+        
+        .gallery-caption {
+            font-size: 0.88rem;
+            color: #ffffff;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+        }
+        
+        /* Lightbox CSS */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.92);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
             padding: 24px;
-            margin-bottom: 60px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 88vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 76vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            object-fit: contain;
+            background: #0f172a;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -46px;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .lightbox-close:hover {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ef4444;
+            transform: scale(1.08);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #0f172a;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            user-select: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .lightbox-nav:hover {
+            background: #047857;
+            color: #ffffff;
+            border-color: #047857;
+            transform: translateY(-50%) scale(1.08);
+        }
+        
+        .lightbox-prev { left: -70px; }
+        .lightbox-next { right: -70px; }
+        
+        .lightbox-caption {
+            margin-top: 18px;
+            color: #0f172a;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            background: #ffffff;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            max-width: 85%;
+        }
+        
+        /* Certificate Specific Display Card */
+        .cert-display-card {
+            position: relative;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 20px;
+            padding: 36px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.05), 0 4px 8px -2px rgba(15, 23, 42, 0.02) !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pdf-wrapper {
+            width: 100%;
+            height: 760px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02);
+        }
+
         .image-wrapper {
             width: 100%;
-            border-radius: 8px;
+            max-height: 760px;
+            border-radius: 14px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: #11121d;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            cursor: zoom-in;
-            transition: var(--transition-bounce);
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
         }
-        
+
         .image-wrapper img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: var(--transition-smooth);
+            max-width: 100%;
+            max-height: 720px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
         }
-        
-        .image-wrapper:hover {
-            border-color: var(--color-teal);
-            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.15);
-        }
-        
+
         .download-action {
-            margin-top: 24px;
+            margin-top: 28px;
             display: flex;
             justify-content: center;
             width: 100%;
+        }
+
+        .download-action .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #047857 !important;
+            color: #ffffff !important;
+            border: 1px solid #047857 !important;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(4, 120, 87, 0.25) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .download-action .btn-primary:hover {
+            background: #065f46 !important;
+            border-color: #065f46 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.35) !important;
+        }
+
+        .pdf-fallback-message {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+            .lightbox-nav { width: 40px; height: 40px; font-size: 0.95rem; }
+        }
+
+        @media (max-width: 768px) {
+            .showcase-body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+            .project-header-card,
+            .cert-display-card {
+                padding: 24px;
+            }
+            .project-header-card h1 {
+                font-size: 2rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .pdf-wrapper {
+                height: 480px;
+            }
+            .pdf-fallback-message {
+                display: block;
+                color: #475569;
+                text-align: center;
+                padding: 16px;
+            }
         }
     </style>
     <!-- Theme State Recovery -->
@@ -107,48 +528,92 @@
     <!-- Magnetic Glow Effect Background -->
     <div class="cursor-glow" id="cursor-glow"></div>
 
-    <div class="section-container" style="padding-top: 40px; max-width: 1000px;">
+    <div class="section-container" style="padding-top: 20px;">
         <!-- Back Navigation -->
         <div class="back-nav">
-            <a href="../index.html#timeline" class="btn btn-secondary btn-icon">
-                <i class="fas fa-arrow-left"></i> Back to Portfolio
-            </a>
+            <a href="../index.html#timeline" class="btn btn-secondary btn-icon"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
         </div>
         
         <!-- Certificate Information -->
-        <div class="cert-header-card">
-            <span class="hero-badge" style="margin-bottom: 15px;">Internship Verification</span>
-            <h1 style="font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(135deg, #ffffff 0%, var(--color-text-secondary) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-heading); font-weight: 700;">
+        <div class="project-header-card">
+            <span class="showcase-badge badge-emerald"><i class="fas fa-briefcase"></i> Internship Verification</span>
+            <h1>
                 Web Development Intern
             </h1>
-            <p style="color: var(--color-text-secondary); font-size: 1.1rem; max-width: 800px; margin-bottom: 20px; font-family: var(--font-body);">
+            <p>
                 Contributed to front-end development by building responsive web interfaces using HTML, CSS, JavaScript, and React. Handled REST API integrations and Git-based collaborative workflows.
             </p>
-            <div class="cert-meta-info">
-                <div style="font-family: var(--font-heading); font-weight: 600; color: var(--color-teal); font-size: 1.1rem;">
-                    Macx Technologies
+                        <div class="project-meta-info">
+                <div class="tech-tags">
+                    <span class="tech-tag"><i class="fas fa-building" style="margin-right: 7px; color: #047857;"></i> Macx Technologies</span>
+                    <span class="tech-tag"><i class="fas fa-check-circle" style="margin-right: 7px; color: #047857;"></i> Web Development Internship</span>
                 </div>
-                <div style="color: var(--color-text-dim); font-size: 0.95rem;">
+                <div class="showcase-meta-date">
                     <i class="far fa-calendar-alt" style="margin-right: 6px;"></i> Duration: Feb 2024 - Mar 2024
                 </div>
             </div>
         </div>
         
-        <!-- Certificate Image Display -->
+        <!-- Certificate Interactive Preview -->
         <div class="cert-display-card">
-            <div class="image-wrapper" id="zoom-img">
-                <img src="../web_development_internship.jpeg" alt="Web Development Internship Certificate">
+            <!-- Header bar with status badge and zoom button -->
+            <div class="cert-preview-toolbar">
+                <div class="cert-badge-live">
+                    <span class="live-dot"></span> Official Verified Credential
+                </div>
+                <button type="button" class="cert-zoom-pill" id="cert-zoom-btn" title="Tap or click to view fullscreen / zoom">
+                    <i class="fas fa-search-plus"></i> Tap to Zoom Fullscreen
+                </button>
             </div>
-            
-            <div class="download-action">
-                <a href="../web_development_internship.jpeg" download class="btn btn-primary btn-icon">
-                    <i class="fas fa-download"></i> Download Certificate Image
+
+            <!-- Crisp Interactive Certificate Frame -->
+            <div class="cert-image-frame" id="cert-frame" role="button" tabindex="0" aria-label="Open fullscreen certificate view" title="Click or tap to view full size">
+                <img src="../web_development_internship.jpeg" alt="Web Development Internship Certificate Preview" class="cert-preview-image" id="cert-main-img">
+                <div class="cert-hover-overlay">
+                    <div class="cert-hover-badge">
+                        <i class="fas fa-expand"></i> Tap to View Fullscreen
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons: Download & Open in Browser -->
+            <div class="cert-actions-wrapper">
+                <a href="../web_development_internship.jpeg" download class="btn btn-primary btn-icon cert-action-btn">
+                    <i class="fas fa-file-download"></i> Download Certificate Image
+                </a>
+                <button type="button" class="btn btn-secondary btn-icon cert-action-btn" id="modal-zoom-trigger">
+                    <i class="fas fa-search-plus"></i> View Fullscreen
+                </button>
+                <a href="../web_development_internship.jpeg" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-icon cert-action-btn">
+                    <i class="fas fa-external-link-alt"></i> Open in New Tab
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- GSAP for cursor glow -->
+    <!-- Certificate Fullscreen Lightbox Modal -->
+    <div class="cert-lightbox-modal" id="cert-modal" role="dialog" aria-modal="true" aria-label="Certificate Fullscreen Viewer">
+        <div class="cert-lightbox-backdrop" id="cert-modal-backdrop"></div>
+        <div class="cert-lightbox-container">
+            <button class="cert-lightbox-close" id="cert-modal-close" aria-label="Close fullscreen certificate view">&times;</button>
+            <div class="cert-lightbox-img-wrapper">
+                <img src="../web_development_internship.jpeg" alt="Web Development Internship Certificate Fullscreen" class="cert-lightbox-img">
+            </div>
+            <div class="cert-lightbox-bar">
+                <div>
+                    <span class="cert-lightbox-title">Web Development Intern</span>
+                    <span class="cert-lightbox-issuer"><i class="fas fa-shield-alt"></i> Verified Credential &bull; Macx Technologies</span>
+                </div>
+                <div class="cert-lightbox-actions">
+                    <a href="../web_development_internship.jpeg" download class="btn btn-primary btn-sm btn-icon">
+                        <i class="fas fa-download"></i> Download Image
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GSAP for cursor glow & Modal Script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
         const glow = document.getElementById('cursor-glow');
@@ -162,20 +627,40 @@
                 });
             });
         }
-        
-        // Simple zoom toggle logic
-        const zoomImg = document.getElementById('zoom-img');
-        let isZoomed = false;
-        if (zoomImg) {
-            zoomImg.addEventListener('click', () => {
-                isZoomed = !isZoomed;
-                if (isZoomed) {
-                    zoomImg.style.transform = 'scale(1.05)';
-                } else {
-                    zoomImg.style.transform = 'none';
-                }
-            });
+
+        // Certificate Zoom Lightbox Logic
+        const certFrame = document.getElementById('cert-frame');
+        const certModal = document.getElementById('cert-modal');
+        const certModalClose = document.getElementById('cert-modal-close');
+        const certModalBackdrop = document.getElementById('cert-modal-backdrop');
+        const zoomPill = document.getElementById('cert-zoom-btn');
+        const zoomActionBtn = document.getElementById('modal-zoom-trigger');
+
+        function openCertModal() {
+            if (certModal) {
+                certModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
+
+        function closeCertModal() {
+            if (certModal) {
+                certModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (certFrame) certFrame.addEventListener('click', openCertModal);
+        if (zoomPill) zoomPill.addEventListener('click', openCertModal);
+        if (zoomActionBtn) zoomActionBtn.addEventListener('click', openCertModal);
+        if (certModalClose) certModalClose.addEventListener('click', closeCertModal);
+        if (certModalBackdrop) certModalBackdrop.addEventListener('click', closeCertModal);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && certModal && certModal.classList.contains('active')) {
+                closeCertModal();
+            }
+        });
     </script>
 </body>
 </html>
